@@ -1,0 +1,1355 @@
+<!doctype html><html lang="en"><head><title>Medibot Case Study · Tanvi Malode</title><meta name="description" content="Medibot smart pillbox: research, market sizing and go-to-market plan. Project walkthrough by Tanvi Malode."><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --brand:#1f6f4a; --bg:#ffffff; --bg2:#e1f6e8; --card:#eaf9ef; --ink:#12261b; --ink2:#4a6a57; --line:#cfeadb;
+  --mint:#c3efd1; --mint2:#e6f8ec; --g:#31cf74; --gInk:#08301a; --gText:#1f7a50;
+  --warn:#e2573a; --warnSoft:#fde8e1;
+  --blue:#dbeeff; --blueInk:#2a73bd; --pink:#ffe3ec; --pinkInk:#c63c69; --violet:#efe4ff; --violetInk:#7c4bc4;
+  --band1:#a9ebbb; --band2:#d9f8e1; --bandCard:#ffffff; --bandLine:#8fd6a6; --bandInk2:#2f5a42;
+  --ph-ink:#12261b; --ph-mute:#5f7d6c; --ph-line:#dcefe3; --ph-mint:#d6f5df; --ph-g:#31cf74;
+  --shadow:0 24px 50px -24px rgba(11,92,46,.38);
+  --serif:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --sans:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'DM Mono',ui-monospace,Menlo,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;letter-spacing:-.005em;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.5 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
+h1,h2,h3,h4,p,ul,ol,dl,dd,figure{margin:0}
+h1,h2,h3,h4{letter-spacing:-.025em}
+ul,ol{padding:0;list-style:none}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer}
+svg.i{width:1em;height:1em;flex:none}
+:focus-visible{outline:3px solid var(--g);outline-offset:2px;box-shadow:0 0 0 5px var(--ink)}
+.wrap{width:100%;max-width:1240px;margin-inline:auto;padding-inline:max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-right,0px))}
+.sec{padding-block:clamp(3.5rem,8vw,7rem);scroll-margin-top:3.6rem}
+.mono{font:500 .7rem/1.3 var(--mono);text-transform:uppercase;letter-spacing:.12em}
+.muted{color:var(--ink2)}
+.small{font-size:.9rem;line-height:1.4}
+.tag{display:inline-flex;align-items:center;gap:.35rem;font:500 .66rem/1 var(--mono);text-transform:uppercase;letter-spacing:.08em;padding:.4rem .65rem;border-radius:99px;white-space:nowrap;background:var(--mint);color:var(--ink)}
+.tag.pink{background:var(--pink);color:var(--pinkInk)}
+.tag.blue{background:var(--blue);color:var(--blueInk)}
+.tag.violet{background:var(--violet);color:var(--violetInk)}
+.tag.g{background:var(--g);color:var(--gInk)}
+.tag.coral{background:var(--warnSoft);color:var(--warn)}
+.tag.line{background:transparent;border:1.5px solid var(--line);color:var(--ink2)}
+
+/* band */
+.stagebox{background:linear-gradient(160deg,var(--band1),var(--band2));border-radius:32px;padding:clamp(1.1rem,3vw,2.2rem);--card:var(--bandCard);--line:var(--bandLine);--ink2:var(--bandInk2)}
+.sec{border-top:1px solid var(--line)}
+
+/* section header */
+.sh{display:grid;gap:1rem;justify-items:start;margin-bottom:clamp(1.8rem,4vw,3rem)}
+.sh .num{display:inline-flex;align-items:center;gap:.55rem;font:500 .72rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--brand);background:var(--mint2);border:1px solid var(--line);padding:.55rem .9rem;border-radius:99px}
+.sh .num::before{content:"";width:.5rem;height:.5rem;border-radius:50%;background:var(--g)}
+.sh h2{font:800 clamp(2.3rem,5.4vw,4rem)/1.02 var(--serif);letter-spacing:-.04em;text-wrap:balance;max-width:16em}
+mark.hl{background:none;color:var(--brand);padding:0}
+
+/* reveal */
+.js .rv{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0ms)}
+.js .rv.vis{opacity:1;transform:none}
+
+/* nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;gap:1.4rem;height:68px}
+.brand{font:800 1.3rem/1 var(--sans);letter-spacing:-.03em;text-decoration:none;flex:none;display:flex;align-items:center;gap:.6rem;color:var(--ink)}
+.brand .bm{width:40px;height:40px;border-radius:12px;background:var(--brand);color:#fff;display:grid;place-items:center;font:800 1.35rem/1 var(--sans)}
+.brand i{width:.32rem;height:.32rem;border-radius:50%;background:var(--g);margin:.55rem 0 0 -.45rem}
+.navlabel{display:none;font:600 .8rem/1 var(--sans);letter-spacing:.05em;text-transform:uppercase;color:var(--ink2);margin-inline:auto;white-space:nowrap}
+@media (min-width:1500px){.navlabel{display:block}}
+.links{display:flex;gap:.2rem;overflow-x:auto;scrollbar-width:none;margin-left:auto;min-width:0}
+.links::-webkit-scrollbar{display:none}
+.links a{padding:.5rem .8rem;border-radius:99px;font:500 .95rem/1 var(--sans);text-decoration:none;white-space:nowrap;color:var(--ink2);transition:background .2s,color .2s}
+.links a:hover{background:var(--mint2);color:var(--ink)}
+.links a[aria-current="true"]{background:var(--mint2);color:var(--brand);font-weight:700}
+.prog{position:absolute;left:0;right:0;bottom:-1px;height:3px;background:var(--g);transform-origin:0 50%;transform:scaleX(var(--p,0))}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:.55rem;padding:.95rem 1.5rem;border-radius:99px;font-weight:700;text-decoration:none;border:1.5px solid var(--line);transition:transform .2s,background .2s,box-shadow .2s;min-height:50px;background:#fff;color:var(--ink)}
+.btn.primary{background:var(--brand);color:#fff;border-color:var(--brand);box-shadow:0 14px 28px -14px rgba(31,111,74,.8)}
+.btn.primary:hover{transform:translateY(-2px);background:#185c3d}
+.btn.ghost:hover{background:var(--mint2);transform:translateY(-2px)}
+
+/* HERO */
+.hero{position:relative;overflow:clip;padding-block:clamp(2.2rem,5vw,4.5rem) clamp(2.5rem,5vw,4rem);}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:2rem;align-items:center}
+.eyebrow{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.6rem}
+.pillt{display:inline-flex;align-items:center;gap:.6rem;font:600 .78rem/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--brand);background:var(--mint2);border:1px solid var(--line);padding:.7rem 1.1rem;border-radius:99px}
+.pillt::before{content:"";width:.6rem;height:.6rem;border-radius:50%;background:var(--g);box-shadow:0 0 0 4px rgba(49,207,116,.2)}
+.hero h1{font:800 clamp(3rem,7.6vw,6.8rem)/.96 var(--serif);letter-spacing:-.05em;margin-left:-.03em}
+.hero h1 .acc{color:var(--brand)}
+.lede{font:400 clamp(1.1rem,1.8vw,1.4rem)/1.5 var(--sans);color:var(--ink2);max-width:27em;margin-top:1.6rem;letter-spacing:-.01em}
+.hchips{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.8rem}
+.hchips span{padding:.75rem 1.1rem;border:1px solid var(--line);border-radius:99px;background:#fff;font-size:.92rem;color:var(--ink2);font-weight:500}
+.by{margin-top:1.4rem;font-size:.9rem;color:var(--ink2);line-height:1.5}.by b{color:var(--ink)}
+.cta{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.8rem}
+.hero-visual{position:relative;min-height:640px;display:grid;place-items:center;--card:#ffffff}
+.hero-visual::before{content:"";position:absolute;width:min(560px,96%);aspect-ratio:1;border-radius:50%;border:1.5px dashed #a9d6bd;left:50%;top:50%;transform:translate(-50%,-50%);z-index:0}
+.hero-visual::after{content:"";position:absolute;width:min(430px,76%);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#d9f6e2 0%,rgba(217,246,226,0) 68%);left:50%;top:50%;transform:translate(-50%,-50%);z-index:0}
+.hero-visual .phone{z-index:2}
+.phone{width:min(290px,76vw);aspect-ratio:290/560;background:#0f2419;border-radius:46px;padding:10px;box-shadow:0 44px 70px -34px rgba(8,48,26,.55),0 0 0 1px rgba(8,48,26,.25);position:relative;flex:none}
+.phone.float{transform:rotate(-5deg);animation:floatr 7s ease-in-out infinite}
+.screen{position:relative;height:100%;background:linear-gradient(180deg,#d9f6e2 0%,#f4fcf6 38%,#fff 70%);border-radius:36px;overflow:hidden;color:var(--ph-ink);display:flex;flex-direction:column}
+.notch{position:absolute;top:9px;left:50%;transform:translateX(-50%);width:78px;height:20px;background:#12261b;border-radius:14px;z-index:3}
+.sbar{display:flex;justify-content:space-between;align-items:center;padding:12px 22px 0;font:500 .72rem/1 var(--mono);color:var(--ph-ink);height:40px;flex:none}
+.sbar span{display:flex;gap:5px;align-items:center}
+.app{padding:.5rem 1.05rem 1rem;display:flex;flex-direction:column;gap:.75rem;flex:1;min-height:0;overflow:hidden}
+.app .k+h4,.app .k+.bigtime{margin-top:.35rem}
+.app h4{font:700 1.85rem/1 var(--serif)}
+.app .k{font:500 .62rem/1 var(--mono);text-transform:uppercase;letter-spacing:.12em;color:var(--ph-mute)}
+.bigtime{font:700 3.6rem/.9 var(--serif);letter-spacing:-.02em}
+.dose-card{background:#fff;border-radius:20px;padding:.95rem;display:grid;gap:.7rem;box-shadow:0 10px 24px -14px rgba(11,92,46,.5);transition:background .4s}
+.dose-card b{font-size:.98rem}
+.dose-card small{display:block;color:var(--ph-mute);font-size:.76rem}
+.take{display:flex;align-items:center;justify-content:center;gap:.5rem;background:var(--ph-g);color:#08301a;border:0;border-radius:99px;padding:.8rem 1rem;font-weight:700;font-size:.92rem;min-height:44px;transition:background .3s}
+.take .a{display:inline}.take .b{display:none}
+.screen.taken .dose-card{background:#c9f4d8}
+.screen.taken .take{background:#fff}
+.screen.taken .take .a{display:none}.screen.taken .take .b{display:inline-flex;gap:.4rem;align-items:center}
+.mini-slots{display:grid;grid-template-columns:repeat(4,1fr);gap:.4rem;text-align:center}
+.mini-slots div{display:grid;gap:.3rem;justify-items:center;font:500 .58rem/1 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ph-mute)}
+.mini-slots i{width:26px;height:26px;border-radius:50%;border:2px solid #c3e8cf;display:grid;place-items:center;background:#fff;color:#08301a}
+.mini-slots i svg{width:13px;height:13px;display:none}
+.screen.taken .mini-slots .first{background:var(--ph-g);border-color:var(--ph-g)}
+.screen.taken .mini-slots .first svg{display:block}
+.nextup{display:flex;gap:.6rem;align-items:center;border-radius:14px;padding:.65rem .75rem;background:#fff;box-shadow:0 8px 18px -14px rgba(11,92,46,.6)}
+.nextup b{display:block;font-size:.84rem;line-height:1.2}.nextup small{font-size:.72rem;color:var(--ph-mute)}
+.notif{position:absolute;z-index:4;background:var(--card);border-radius:16px;padding:.7rem .85rem;box-shadow:var(--shadow);display:flex;gap:.65rem;align-items:flex-start;width:min(220px,58%);font-size:.8rem;line-height:1.3;color:#0d2a1a;--ink2:#4a6657;animation:floaty 6s ease-in-out infinite}
+.notif .ic{width:30px;height:30px;border-radius:9px;background:var(--g);color:var(--gInk);display:grid;place-items:center;flex:none}
+.notif b{display:block;font-size:.88rem;font-weight:700}
+.notif.n1{top:12%;right:-3%}
+.notif.n2{bottom:12%;left:-3%;animation-delay:-3s}
+.hero-visual .when-taken{display:none}
+.hero-visual.taken .when-taken{display:block}
+.hero-visual.taken .when-due{display:none}
+.pillf{position:absolute;z-index:1;animation:floaty 8s ease-in-out infinite;--r:0deg}
+.cap{width:58px;height:22px;border-radius:99px;border:2px solid var(--ink);background:linear-gradient(90deg,var(--g) 50%,#fff 50%)}
+.tab-r{width:30px;height:30px;border-radius:50%;border:2px solid var(--ink);background:#fff;position:relative}
+.tab-r::after{content:"";position:absolute;left:5px;right:5px;top:50%;border-top:2px solid var(--ink)}
+.hint{margin-top:1rem;text-align:center;font:500 .66rem/1.3 var(--mono);text-transform:uppercase;letter-spacing:.1em;color:var(--ink2)}
+@media (max-width:900px){.hero-grid{grid-template-columns:1fr}.hero-visual{min-height:600px}}
+@media (max-width:560px){.notif.n1{right:0}.notif.n2{left:0}.pillf:nth-of-type(3){display:none}}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(var(--r,0deg))}50%{transform:translateY(-12px) rotate(calc(var(--r,0deg) + 3deg))}}
+@keyframes floatr{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-12px) rotate(-5deg)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes ring{0%{box-shadow:0 0 0 0 rgba(49,207,116,.8)}100%{box-shadow:0 0 0 16px rgba(49,207,116,0)}}
+@keyframes pulse{0%{transform:scale(.75);opacity:.9}100%{transform:scale(1.5);opacity:0}}
+@keyframes ledp{50%{opacity:.5}}
+@keyframes wave{0%{opacity:0}40%{opacity:1}100%{opacity:0}}
+
+/* 60 seconds */
+.sixty{background:var(--bg);border-top:1px solid var(--line)}
+.sixty .lbl{padding-top:1.5rem}
+.six{display:grid;grid-template-columns:1.25fr repeat(4,1fr);gap:.8rem;margin-top:.8rem;padding-bottom:1.6rem}
+.six a{display:grid;gap:.35rem;align-content:start;padding:1.1rem 1.2rem 1.4rem;text-decoration:none;background:var(--mint2);border-radius:20px;transition:background .25s,transform .25s}
+.six a:hover{background:var(--mint);transform:translateY(-3px)}
+.six .big{font:800 clamp(1.7rem,2.9vw,2.4rem)/1 var(--serif);letter-spacing:-.04em;white-space:nowrap}
+.six a:first-child .big{font-size:clamp(2.2rem,4vw,3.3rem)}
+.six p{font-size:.9rem;line-height:1.3;color:var(--ink2);max-width:14em}
+@media (max-width:900px){.six{grid-template-columns:1fr 1fr}.six a:first-child{grid-column:1/-1}}
+
+/* cards */
+.panelbox{background:var(--card);border-radius:20px;padding:clamp(1.1rem,3vw,1.7rem);box-shadow:0 18px 40px -28px rgba(11,92,46,.45);border:1px solid var(--line)}
+.pb-h{display:flex;justify-content:space-between;gap:.8rem;align-items:center;flex-wrap:wrap;margin-bottom:1.2rem}
+.pb-h h3{font:700 1.7rem/1 var(--serif)}
+.h3s{font:700 clamp(1.6rem,3vw,2.3rem)/1.08 var(--serif);text-wrap:balance}
+.h3t{font:700 clamp(1.6rem,3vw,2.2rem)/1.05 var(--serif);margin-bottom:1.1rem}
+
+/* PROBLEM */
+.pgrid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(1.5rem,4vw,3.5rem);align-items:center}
+.sw{display:flex;align-items:center;gap:.7rem;background:none;border:0;padding:.2rem 0;min-height:44px;font-weight:700;font-size:.95rem}
+.sw .tr{width:54px;height:30px;border-radius:99px;background:var(--bg2);border:2px solid var(--ink);position:relative;transition:background .3s;flex:none}
+.sw .tr::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:var(--ink);transition:transform .3s,background .3s}
+.sw[aria-checked="true"] .tr{background:var(--g);border-color:var(--g)}
+.sw[aria-checked="true"] .tr::after{transform:translateX(24px);background:var(--gInk)}
+.day{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));position:relative;text-align:center}
+.day::before{content:"";position:absolute;left:12%;right:12%;top:46px;border-top:2px dashed var(--line)}
+.slot{display:grid;gap:.5rem;justify-items:center;position:relative}
+.slot .t{font:500 .68rem/1 var(--mono);color:var(--ink2);letter-spacing:.08em}
+.slot .c{width:54px;height:54px;border-radius:50%;border:2px solid var(--ink);background:var(--card);display:grid;place-items:center;color:var(--ink);transition:background .4s,border-color .4s,color .4s;position:relative;z-index:1}
+.slot .c svg{width:24px;height:24px;display:none}
+.slot.ok .c{background:var(--g);border-color:var(--g);color:var(--gInk)}
+.slot.ok .c .i-ok{display:block}
+.slot.miss .c{background:var(--warnSoft);border-color:var(--warn);color:var(--warn)}
+.slot.miss .c .i-x{display:block}
+.slot.unsure .c{border-style:dashed;border-color:var(--ink2);color:var(--ink2)}
+.slot.unsure .c .i-q{display:block}
+.slot .n{font-weight:700;font-size:.92rem}
+.slot .st{font-size:.8rem;color:var(--ink2)}
+.slot.miss .st{color:var(--warn);font-weight:700}
+.day.on .slot .c{animation:ring 1.2s ease-out 1;animation-delay:calc(var(--k)*.28s)}
+.dayfoot{display:flex;justify-content:flex-end;align-items:baseline;gap:.5rem;margin-top:1.3rem;padding-top:.9rem;border-top:1px solid var(--line)}
+.dayfoot b{font:700 2.2rem/1 var(--serif)}
+.dots{display:grid;grid-template-columns:repeat(10,1fr);gap:7px;max-width:340px}
+.dots span{aspect-ratio:1;border-radius:50%;background:var(--mint);transform:scale(.55);opacity:.3;transition:transform .5s,opacity .5s;transition-delay:calc(var(--i)*11ms)}
+.dots.vis span{transform:none;opacity:1}
+.dots span.x{background:var(--warn)}
+.legend{display:flex;gap:1.1rem;flex-wrap:wrap;margin-top:.9rem;font-size:.85rem}
+.legend i{display:inline-block;width:.8rem;height:.8rem;border-radius:50%;margin-right:.4rem;vertical-align:-1px}
+.stat49{font:800 clamp(3rem,6vw,4.8rem)/.9 var(--serif);letter-spacing:-.045em;margin-top:1rem}
+.tiles3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-top:clamp(1.5rem,3vw,2.5rem)}
+.tile{background:var(--card);border-radius:18px;padding:1.2rem 1.3rem;border:1px solid var(--line);transition:transform .25s,box-shadow .25s}
+.tile:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.tile b{display:block;font:800 clamp(1.9rem,3.6vw,2.7rem)/1 var(--serif);letter-spacing:-.04em}
+.tile span{color:var(--ink2);font-size:.92rem}
+@media (max-width:900px){.pgrid{grid-template-columns:1fr}}
+@media (max-width:640px){.tiles3{grid-template-columns:1fr}}
+
+/* RESEARCH */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-bottom:1.8rem}
+.steps button{position:relative;background:none;border:0;border-top:3px solid var(--line);text-align:left;padding:1rem .8rem 0 0;display:grid;gap:.2rem;align-content:start;transition:border-color .3s}
+.steps button .n{font:700 2.2rem/1 var(--serif);color:var(--ink2);transition:color .3s}
+.steps button .t{font-weight:700}
+.steps button[aria-selected="true"]{border-top-color:var(--ink)}
+.steps button[aria-selected="true"] .n{color:var(--gText)}
+.steps button[aria-selected="true"]::before{content:"";position:absolute;top:-.55rem;left:0;width:.9rem;height:.9rem;border-radius:50%;background:var(--g);box-shadow:0 0 0 3px var(--bg)}
+.steps button:hover .n{color:var(--ink)}
+.tp:not([hidden]){animation:fadeUp .5s both}
+.flow3{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:.8rem;align-items:stretch}
+.flow3 .st3{background:var(--card);border-radius:18px;padding:1.1rem;display:grid;gap:.4rem;align-content:start;border:1px solid var(--line)}
+.flow3 .st3 b{font:700 1.5rem/1.05 var(--serif)}
+.flow3 .st3 span{color:var(--ink2);font-size:.92rem}
+.flow3 .ar{align-self:center;color:var(--gText);width:1.4rem;height:1.4rem}
+.persona{display:flex;gap:1rem;align-items:center;margin-bottom:1.4rem}
+.avatar{width:64px;height:64px;border-radius:50%;background:var(--g);color:var(--gInk);display:grid;place-items:center;font:700 2rem/1 var(--serif);flex:none}
+.persona h3{font:700 1.9rem/1.05 var(--serif)}
+.persona .tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.5rem}
+.lessons{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem}
+.lessons div{background:var(--card);border-radius:18px;padding:1.1rem;display:grid;gap:.5rem;align-content:start;border:1px solid var(--line)}
+.lessons .ic{width:38px;height:38px;border-radius:50%;background:var(--mint);display:grid;place-items:center;color:var(--gText)}
+.lessons b{font-size:1.02rem;line-height:1.2}
+.lessons span.s{color:var(--ink2);font-size:.88rem}
+.quote{font:700 1.5rem/1.2 var(--serif);margin-top:1.4rem;padding-left:1rem;border-left:4px solid var(--g);max-width:34rem}
+.hyp{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem}
+.hyp div{background:var(--card);border-radius:18px;padding:1.1rem;display:grid;gap:.5rem;align-content:start;border:1px solid var(--line)}
+.hyp b{font:700 1.4rem/1.1 var(--serif)}
+.hyp span{font-size:.88rem;color:var(--ink2)}
+@media (max-width:900px){.lessons,.hyp{grid-template-columns:1fr 1fr}.flow3{grid-template-columns:1fr}.flow3 .ar{transform:rotate(90deg);justify-self:center}}
+@media (max-width:520px){.lessons,.hyp{grid-template-columns:1fr}}
+
+/* RIVALS */
+.ctabs{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.4rem}
+.ctabs button{background:var(--card);border:1.5px solid var(--line);border-radius:99px;padding:.55rem 1rem;font-weight:700;font-size:.9rem;min-height:44px;transition:background .2s,border-color .2s}
+.ctabs button:hover{border-color:var(--g)}
+.ctabs button[aria-selected="true"]{background:var(--g);border-color:var(--g);color:var(--gInk)}
+.cpanel{display:grid;grid-template-columns:minmax(0,1.15fr) auto minmax(0,.85fr) minmax(0,.85fr);gap:1rem;align-items:stretch}
+.cpanel .cl{background:var(--card);border-radius:20px;padding:1.4rem;border:1px solid var(--line);display:grid;gap:.9rem;align-content:start;grid-column:1}
+.cpanel h3{font:700 clamp(2rem,3.4vw,2.8rem)/1 var(--serif)}
+.cprice{display:flex;align-items:baseline;gap:.7rem;flex-wrap:wrap}
+.cprice b{font:700 2.2rem/1 var(--serif)}
+.cprice s{color:var(--ink2);font-size:.9rem}
+.chipsrow{display:flex;flex-wrap:wrap;gap:.4rem}
+.cpanel .gap,.cpanel .edge{border-radius:20px;padding:1.4rem;display:grid;gap:.6rem;align-content:start}
+.cpanel .gap{background:var(--warnSoft);color:var(--warn)}
+.cpanel .edge{background:var(--g);color:var(--gInk)}
+.cpanel .gap b,.cpanel .edge b{font:700 clamp(1.5rem,2.4vw,1.9rem)/1.1 var(--serif);color:inherit}
+.cpanel .go{align-self:center;color:var(--gText);width:1.6rem;height:1.6rem;grid-column:2}
+.cpanel .gap{grid-column:3}.cpanel .edge{grid-column:4}
+.rrow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(1.5rem,4vw,3.5rem);margin-top:clamp(2.5rem,5vw,4rem)}
+.plot{margin-top:.4rem}
+.axis{position:relative;height:1.1rem;margin-bottom:.2rem}
+.axis span{position:absolute;transform:translateX(-50%);font:500 .64rem/1 var(--mono);color:var(--ink2)}
+.axis span:first-child{transform:none}.axis span:last-child{transform:translateX(-100%)}
+.prow{display:grid;grid-template-columns:1fr auto;gap:.1rem .8rem;padding:.5rem 0;border-top:1px solid var(--line)}
+.prow b{font-weight:700;font-size:.92rem}
+.prow .v{font:500 .78rem/1.5 var(--mono);text-align:right}
+.trk{grid-column:1/-1;position:relative;height:20px;margin-top:.15rem}
+.trk::before{content:"";position:absolute;left:0;right:0;top:9px;border-top:1px solid var(--line)}
+.trk::after{content:"";position:absolute;left:12.5%;width:35%;top:3px;height:14px;background:var(--mint);border-radius:4px;z-index:0}
+.trk i{position:absolute;top:3px;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:var(--ink);z-index:1;transform:scale(0);transition:transform .5s cubic-bezier(.3,1.6,.5,1);transition-delay:calc(var(--k)*90ms)}
+.trk i.o{background:var(--card);border:2px solid var(--ink2)}
+.trk u{position:absolute;top:9px;height:2px;background:var(--ink2);z-index:1;text-decoration:none}
+.trk em{position:absolute;top:3px;height:14px;background:var(--ink);border-radius:8px;z-index:1;transform-origin:left;transform:scaleX(0);transition:transform .6s;transition-delay:calc(var(--k)*90ms)}
+.plot.vis .trk i,.plot.vis .trk em{transform:none}
+.bandkey{display:flex;align-items:center;gap:.5rem;font-size:.78rem;color:var(--ink2);margin-top:.6rem}
+.bandkey i{width:22px;height:10px;background:var(--mint);border-radius:3px}
+.igrow{display:grid;grid-template-columns:7.5rem 1fr auto;gap:.8rem;align-items:center;padding:.7rem 0;border-top:1px solid var(--line)}
+.igrow b{font-size:.92rem}
+.igrow .bar{height:14px;border-radius:8px;background:var(--mint);position:relative;overflow:hidden}
+.igrow .bar i{position:absolute;inset:0 auto 0 0;width:100%;background:var(--ink);border-radius:8px;transform-origin:left;transform:scaleX(0);transition:transform .8s}
+.igs.vis .igrow .bar i{transform:scaleX(var(--w))}
+.igrow small{font:500 .68rem/1 var(--mono);text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}
+.matrix{margin-top:clamp(2.5rem,5vw,4rem)}
+.mx{overflow-x:auto}
+.mx table{width:100%;border-collapse:separate;border-spacing:0;min-width:560px}
+.mx th{font:500 .68rem/1.2 var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--ink2);padding:.6rem .5rem;text-align:center;vertical-align:bottom}
+.mx th:first-child{text-align:left}
+.mx td{padding:.7rem .5rem;text-align:center;border-top:1px solid var(--line)}
+.mx td:first-child{text-align:left;font-weight:700;min-width:9rem}
+.mx th.me,.mx td.me{background:var(--g);color:var(--gInk)}
+.mx th.me{border-radius:14px 14px 0 0;font-weight:700}
+.mx tr:last-child td.me{border-radius:0 0 14px 14px}
+.x{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--warnSoft);color:var(--warn)}
+.x svg{width:13px;height:13px}
+.ck{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--gInk);color:var(--g)}
+.ck svg{width:14px;height:14px}
+.dsh{color:var(--line)}
+@media (max-width:900px){.cpanel{grid-template-columns:1fr}.cpanel .cl,.cpanel .gap,.cpanel .edge,.cpanel .go{grid-column:1}.cpanel .go{transform:rotate(90deg);justify-self:center}.rrow{grid-template-columns:1fr}}
+
+/* PRODUCT */
+.pbx-wrap{display:grid;margin-top:0;grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr);gap:clamp(1.5rem,4vw,3.5rem);align-items:center}
+.pb-fig{position:relative;aspect-ratio:640/440;width:100%}
+.pb-fig svg.pbx{width:100%;height:100%;display:block;overflow:visible}
+.halo{opacity:0;transition:opacity .35s;fill:none;stroke:var(--g);stroke-width:4;stroke-dasharray:7 6}
+.pb-fig[data-f="strip"] .h-strip,.pb-fig[data-f="sound"] .h-sound,.pb-fig[data-f="battery"] .h-battery,.pb-fig[data-f="wifi"] .h-wifi,.pb-fig[data-f="light"] .h-light{opacity:1}
+.hs{position:absolute;width:38px;height:38px;transform:translate(-50%,-50%);border-radius:50%;border:2px solid var(--g);background:rgba(49,207,116,.2);padding:0;box-shadow:0 4px 12px rgba(11,92,46,.3);transition:background .25s}
+.hs::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid var(--g);opacity:0;animation:pulse 2.4s ease-out infinite}
+.hs[aria-pressed="true"]{background:rgba(49,207,116,.4)}
+.hs[aria-pressed="true"]::after{animation:none}
+.led-core{transition:opacity .3s}
+.pb-fig.ring .led-core{animation:ledp 1s ease-in-out infinite}
+.pb-fig .led-glow{opacity:.25;transition:opacity .3s}
+.pb-fig.ring .led-glow{opacity:.9}
+.waves path{opacity:0;fill:none;stroke:var(--g);stroke-width:3.5;stroke-linecap:round}
+.pb-fig.ring .waves path{animation:wave 1.5s ease-in-out infinite}
+.pb-fig.ring .waves path:nth-child(2){animation-delay:.25s}
+.toast{position:absolute;top:2%;right:4%;background:#fff;color:var(--ph-ink);border-radius:14px;padding:.6rem .8rem;display:flex;gap:.55rem;align-items:center;font-size:.82rem;box-shadow:var(--shadow);opacity:0;transform:translateY(8px);transition:opacity .4s,transform .4s;pointer-events:none}
+.toast .ic{width:26px;height:26px;border-radius:8px;background:var(--g);color:var(--gInk);display:grid;place-items:center;flex:none}
+.pb-fig.ring .toast{opacity:1;transform:none}
+.flist{display:grid;gap:.1rem}
+.flist button{display:grid;grid-template-columns:2rem 1fr;gap:0 .6rem;text-align:left;background:none;border:0;border-top:1px solid var(--line);padding:.85rem .4rem;transition:background .25s}
+.flist button:last-of-type{border-bottom:1px solid var(--line)}
+.flist .n{font:700 1.5rem/1 var(--serif);color:var(--ink2)}
+.flist b{font-weight:700}
+.flist span.s{grid-column:2;font-size:.88rem;color:var(--ink2)}
+.flist button[aria-pressed="true"]{background:var(--card);border-radius:14px;border-top-color:transparent}
+.flist button[aria-pressed="true"] .n{color:var(--gText)}
+.flist button:hover{background:var(--mint2)}
+.ringbtn{margin-top:1rem}
+.ptabs-wrap{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(2rem,5vw,5rem);align-items:center;margin-top:clamp(3rem,6vw,5.5rem)}
+.pstage{display:grid;place-items:center;position:relative;padding:1rem 0}
+.pstage .phone{z-index:1}
+.ptabs{display:grid;gap:.2rem}
+.ptabs button{display:grid;grid-template-columns:2.2rem 1fr;gap:.2rem .8rem;text-align:left;background:none;border:0;border-top:1px solid var(--line);padding:1rem .4rem;color:var(--ink);transition:background .25s}
+.ptabs button:last-child{border-bottom:1px solid var(--line)}
+.ptabs .n{font:700 1.6rem/1 var(--serif);color:var(--ink2)}
+.ptabs b{font:700 1.7rem/1.05 var(--serif)}
+.ptabs .w{grid-column:2;font-size:.92rem;color:var(--ink2);max-height:0;overflow:hidden;opacity:0;transition:max-height .4s,opacity .4s}
+.ptabs button[aria-selected="true"]{background:var(--card);border-radius:16px;border-top-color:transparent}
+.ptabs button[aria-selected="true"] .n{color:var(--gText)}
+.ptabs button[aria-selected="true"] .w{max-height:6rem;opacity:1;margin-top:.15rem}
+.ptabs button:hover{background:var(--mint2)}
+.doses li{display:grid;grid-template-columns:30px 1fr auto;gap:.6rem;align-items:center;padding:.62rem 0;border-bottom:1px solid var(--ph-line)}
+.doses .dc{width:28px;height:28px;border-radius:50%;border:2px solid #c3e8cf;display:grid;place-items:center;background:#fff;color:#08301a}
+.doses .dc svg{width:14px;height:14px;display:none}
+.doses li.ok .dc{background:var(--ph-g);border-color:var(--ph-g)}
+.doses li.ok .dc svg{display:block}
+.doses li.due .dc{border-color:var(--warn);box-shadow:0 0 0 4px rgba(226,87,58,.15)}
+.doses b{font-size:.9rem;display:block;line-height:1.15}
+.doses small{font-size:.72rem;color:var(--ph-mute)}
+.doses .ds{font:500 .64rem/1 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ph-mute)}
+.mbtn{background:var(--ph-g);color:#08301a;border:0;border-radius:99px;padding:.5rem .75rem;font-weight:700;font-size:.76rem;min-height:36px}
+.pgbar{height:8px;border-radius:9px;background:#d9efe0;overflow:hidden}
+.pgbar i{display:block;height:100%;background:var(--ph-g);border-radius:9px;transition:width .5s}
+.pgtxt{display:flex;justify-content:space-between;font-size:.76rem;color:var(--ph-mute);margin-top:.4rem}
+.su li{display:grid;grid-template-columns:28px 1fr;gap:.7rem;padding:.7rem 0;border-bottom:1px solid var(--ph-line);font-size:.88rem;align-items:start}
+.su li>i{width:26px;height:26px;border-radius:50%;border:2px solid #c3e8cf;display:grid;place-items:center;font:500 .7rem/1 var(--mono);font-style:normal;background:#fff}
+.su li.done>i{background:var(--ph-g);border-color:var(--ph-g)}
+.chips{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.5rem}
+.chips button{border:1.5px solid #bfe6cd;background:#fff;color:#12261b;border-radius:99px;padding:.3rem .65rem;font-size:.74rem;font-weight:700;min-height:32px}
+.chips button[aria-pressed="true"]{background:var(--ph-g);border-color:var(--ph-g);color:#08301a}
+.goal{background:var(--ph-mint);border-radius:14px;padding:.7rem .85rem;font-size:.8rem;font-weight:700;color:#08301a}
+.ppl li{display:grid;grid-template-columns:34px 1fr;gap:.7rem;align-items:center;padding:.65rem 0;border-bottom:1px solid var(--ph-line)}
+.ppl .av{width:34px;height:34px;border-radius:50%;background:var(--ph-mint);display:grid;place-items:center;font:700 1.1rem/1 var(--serif)}
+.ppl b{font-size:.9rem;display:block;line-height:1.15}.ppl small{font-size:.72rem;color:var(--ph-mute)}
+.ppl li.addrow{display:block}.ppl .add{color:var(--ph-mute);font-size:.84rem;display:block;padding:.2rem 0}
+.feed{background:var(--ph-mint);border-radius:14px;padding:.8rem;font-size:.82rem}
+.feed b{display:block;font:500 .6rem/1 var(--mono);text-transform:uppercase;letter-spacing:.12em;color:var(--ph-mute);margin-bottom:.3rem}
+.drow{display:flex;justify-content:space-between;align-items:center;gap:.6rem;padding:.7rem 0;border-bottom:1px solid var(--ph-line);font-size:.86rem}
+.drow span:first-child{display:flex;gap:.5rem;align-items:center}
+.drow b{font-weight:700}
+.tg{width:44px;height:26px;border-radius:99px;border:2px solid #bfe6cd;background:#fff;position:relative;padding:0;flex:none}
+.tg::after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#9bbfaa;transition:transform .25s,background .25s}
+.tg[aria-checked="true"]{background:var(--ph-g);border-color:var(--ph-g)}
+.tg[aria-checked="true"]::after{transform:translateX(18px);background:#fff}
+.simwrap{margin-top:clamp(3rem,6vw,5rem)}
+.simhead{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:1.3rem}
+.simhead h3{font:700 clamp(1.8rem,3.4vw,2.6rem)/1.05 var(--serif)}
+.beats{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:1rem;align-items:stretch}
+.beats .bar-ar{align-self:center}
+.beat{background:var(--card);border-radius:20px;padding:1.2rem;display:grid;gap:.8rem;justify-items:start;opacity:.65;transition:opacity .5s,transform .5s,box-shadow .5s;min-height:220px;align-content:space-between}
+.beat.on{opacity:1;transform:translateY(-4px);box-shadow:var(--shadow)}
+.beat .lab{font:500 .66rem/1 var(--mono);text-transform:uppercase;letter-spacing:.1em;color:var(--gText)}
+.beat p{font-weight:700;line-height:1.25}
+.bar-ar{width:1.6rem;height:1.6rem;color:var(--ink2)}
+.dev{width:100%;max-width:190px;height:auto}
+.dev .led{fill:#cfe6d7;transition:fill .3s}
+.beat.on .dev .led{fill:var(--g);animation:ledp 1.1s ease-in-out infinite}
+.dev .wave{opacity:0;fill:none;stroke:var(--g);stroke-width:3;stroke-linecap:round}
+.beat.on .dev .wave{animation:wave 1.6s ease-in-out infinite}
+.beat.on .dev .wave.w2{animation-delay:.25s}
+.mnotif{background:var(--bg);color:var(--ink);border-radius:14px;padding:.7rem .85rem;display:flex;gap:.6rem;align-items:flex-start;font-size:.84rem;width:100%;border:1px solid var(--line)}
+.mnotif .ic{width:28px;height:28px;border-radius:8px;background:var(--g);color:var(--gInk);display:grid;place-items:center;flex:none}
+.mnotif b{display:block}
+@media (max-width:900px){.pbx-wrap,.ptabs-wrap{grid-template-columns:1fr}.beats{grid-template-columns:1fr}.bar-ar{transform:rotate(90deg);justify-self:center}.beat{min-height:0}}
+
+/* MARKET */
+.mgrid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(1.5rem,4vw,4rem);align-items:center}
+.circ{width:100%;max-width:460px;height:auto;justify-self:center}
+.circ text{font-family:var(--sans)}
+.circ text[id]{font-weight:800;letter-spacing:-.03em}
+.tiers li{display:grid;grid-template-columns:4.6rem 1fr;gap:.2rem 1rem;padding:.9rem 0;border-top:1px solid var(--ink)}
+.tiers .k{font:700 2.1rem/1 var(--serif)}
+.tiers .v{font:700 clamp(1.9rem,3.6vw,2.7rem)/1 var(--serif)}
+.tiers .w{grid-column:2;font-size:.88rem;color:var(--ink2)}
+.ctl{margin-top:1.4rem;display:grid;gap:.9rem;background:var(--card);border-radius:18px;padding:1.1rem;border:1px solid var(--line)}
+.ctl .hd{display:flex;justify-content:space-between;align-items:center;gap:.6rem;flex-wrap:wrap}
+.ctl label{display:grid;grid-template-columns:1fr auto;gap:.2rem .8rem;align-items:center;font-size:.9rem;font-weight:700}
+.ctl label output{font:500 .85rem/1 var(--mono)}
+.ctl input[type=range]{grid-column:1/-1;width:100%;height:28px;-webkit-appearance:none;appearance:none;background:linear-gradient(90deg,var(--g) var(--pct,50%),var(--line) var(--pct,50%)) center/100% 8px no-repeat;border-radius:8px;margin:0}
+.ctl input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:#fff;border:3px solid var(--g);box-shadow:0 2px 8px rgba(11,92,46,.35)}
+.ctl input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid var(--g);box-shadow:0 2px 8px rgba(11,92,46,.35)}
+.ctl button.rs{background:none;border:1.5px solid var(--ink);border-radius:99px;padding:.35rem .8rem;font:500 .7rem/1 var(--mono);text-transform:uppercase;letter-spacing:.08em;min-height:34px}
+.ctl button.rs:hover{background:var(--g);color:var(--gInk);border-color:var(--g)}
+.somrow{margin-top:clamp(2.2rem,5vw,3.5rem);display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(1.5rem,4vw,3.5rem);align-items:start}
+.stack{display:flex;height:54px;border-radius:14px;overflow:hidden;margin-top:.8rem}
+.stack div{display:grid;place-items:center;font:500 .8rem/1 var(--mono);transform-origin:left;transform:scaleX(0);transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+.stack.vis div{transform:none}
+.stack .s1{width:60%;background:var(--ink);color:var(--bg)}
+.stack .s2{width:40%;background:var(--g);color:var(--gInk)}
+.stackl{display:flex;justify-content:space-between;gap:1rem;margin-top:.5rem;font-size:.82rem;color:var(--ink2)}
+details.how{border-top:1px solid var(--ink)}
+details.how summary{cursor:pointer;padding:1rem 0;font-weight:700;list-style:none;display:flex;justify-content:space-between;align-items:center;min-height:48px}
+details.how summary::-webkit-details-marker{display:none}
+details.how summary::after{content:"+";font:700 1.8rem/1 var(--serif);transition:transform .3s}
+details.how[open] summary::after{transform:rotate(45deg)}
+.tbl{overflow-x:auto}
+.tbl table{width:100%;border-collapse:collapse;font-size:.92rem;min-width:420px}
+.tbl td{padding:.6rem .4rem;border-top:1px solid var(--line);vertical-align:top}
+.tbl td.r{text-align:right;font:500 .88rem/1.4 var(--mono);white-space:nowrap}
+.tbl .tag{margin-left:.4rem;vertical-align:middle}
+@media (max-width:900px){.mgrid,.somrow{grid-template-columns:1fr}}
+
+/* STRATEGY */
+.smap{display:grid;grid-template-columns:minmax(0,.9fr) auto minmax(0,1.1fr) auto minmax(0,1.2fr);gap:1rem;align-items:stretch}
+.sn{padding:1.3rem;border-radius:22px;display:grid;gap:.9rem;align-content:start;background:var(--card);border:1px solid var(--line);transition:box-shadow .3s}
+.sn:hover{box-shadow:var(--shadow)}
+.sn.mid{background:var(--g);color:var(--gInk);border-color:var(--g)}
+.sn .q{font:500 .68rem/1 var(--mono);text-transform:uppercase;letter-spacing:.14em;color:var(--ink2)}
+.sn.mid .q{color:var(--gInk);opacity:.75}
+.sn h3{font:700 clamp(1.5rem,2.4vw,2rem)/1.08 var(--serif)}
+.sn ul li{padding:.55rem 0;border-top:1px solid var(--line);font-size:.95rem;line-height:1.3;font-weight:600}
+.sn ul li small{display:block;font:500 .66rem/1 var(--mono);text-transform:uppercase;letter-spacing:.1em;color:var(--ink2);margin-bottom:.2rem}
+.joint{align-self:center;width:2.2rem;height:2.2rem;border-radius:50%;background:var(--g);color:var(--gInk);display:grid;place-items:center;flex:none}
+.pr{display:flex;flex-wrap:wrap;gap:.4rem}
+.pr span{font-size:.82rem;font-weight:700;background:rgba(255,255,255,.55);border-radius:99px;padding:.35rem .7rem}
+.chtabs{display:flex;gap:.3rem;background:#ffffff;padding:.25rem;border-radius:99px;width:max-content;max-width:100%}
+.chtabs button{border:0;background:none;padding:.5rem .9rem;border-radius:99px;font-weight:700;font-size:.86rem;min-height:40px}
+.chtabs button[aria-selected="true"]{background:var(--ink);color:var(--bg)}
+.chl{display:flex;flex-wrap:wrap;gap:.45rem}
+.chl li{background:var(--mint);border-radius:99px;padding:.45rem .85rem;font-size:.86rem;font-weight:700}
+@media (max-width:1000px){.smap{grid-template-columns:1fr}.joint{transform:rotate(90deg);justify-self:center}}
+.launch{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(1.5rem,4vw,4rem);margin-top:clamp(2.5rem,5vw,4.5rem);align-items:start}
+.road{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.8rem;padding-top:2.2rem}
+.road::before{content:"";position:absolute;left:0;right:0;top:.55rem;height:4px;background:var(--line);border-radius:4px}
+.road::after{content:"";position:absolute;left:0;width:100%;top:.55rem;height:4px;background:var(--g);border-radius:4px;transform-origin:left;transform:scaleX(0);transition:transform 1.6s cubic-bezier(.3,.7,.2,1) .2s}
+.road.vis::after{transform:scaleX(1)}
+.ph-n{position:relative}
+.ph-n::before{content:"";position:absolute;top:-2.2rem;left:0;width:1.1rem;height:1.1rem;border-radius:50%;background:var(--g);border:3px solid var(--bg);box-shadow:0 0 0 2px var(--g);margin-top:-.15rem}
+.ph-n b{font:500 .66rem/1 var(--mono);text-transform:uppercase;letter-spacing:.12em;color:var(--ink2)}
+.ph-n h4{font:700 1.5rem/1.1 var(--serif);margin:.3rem 0 .15rem}
+.ph-n p{font-size:.88rem;line-height:1.3;color:var(--ink2)}
+.b2b{display:flex;margin-top:1.8rem;border-radius:14px;overflow:hidden;font-size:.85rem;font-weight:700}
+.b2b div{flex:1;padding:.8rem .9rem;line-height:1.25}
+.b2b div:first-child{background:var(--mint)}
+.b2b div:nth-child(2){background:var(--g);color:var(--gInk)}
+.b2b div:last-child{background:var(--ink);color:var(--bg)}
+.b2b small{display:block;font:500 .62rem/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;opacity:.75;margin-bottom:.3rem}
+.weeks li{display:grid;grid-template-columns:3.4rem 1fr;gap:.2rem 1rem;padding:.75rem 0;border-top:1px solid var(--line);align-items:baseline}
+.weeks li:last-child{border-bottom:1px solid var(--line)}
+.weeks .wk{font:700 1.9rem/1 var(--serif);color:var(--gText)}
+.weeks b{display:block}
+.weeks span{font-size:.88rem;color:var(--ink2)}
+@media (max-width:900px){.launch{grid-template-columns:1fr}.b2b{flex-direction:column}}
+@media (max-width:560px){.road{grid-template-columns:1fr;padding-top:0;padding-left:1.8rem}.road::before,.road::after{left:.5rem;right:auto;width:4px;height:100%;top:0;transform-origin:top}.road::after{transform:scaleY(0)}.road.vis::after{transform:scaleY(1)}.ph-n::before{top:.1rem;left:-1.8rem}}
+.funnel{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(1.5rem,4vw,4rem);margin-top:clamp(2.5rem,5vw,4.5rem);align-items:start}
+.fn{display:grid;gap:.45rem}
+.fn button{width:var(--w);text-align:left;background:var(--mint);border:0;border-radius:12px;padding:.8rem 1rem;display:grid;gap:.1rem;transition:background .25s,transform .25s,width .8s cubic-bezier(.2,.7,.2,1);min-height:56px}
+.js .fn:not(.vis) button{width:30%}
+.fn button b{font-size:1rem}
+.fn button small{color:var(--ink2);font-size:.78rem;line-height:1.25}
+.fn button:hover{transform:translateX(4px)}
+.fn button[aria-selected="true"]{background:var(--g);color:var(--gInk)}
+.fn button[aria-selected="true"] small{color:var(--gInk)}
+.fpanel ul li{padding:.65rem 0;border-top:1px solid var(--line);display:flex;gap:.7rem;align-items:flex-start;line-height:1.3;font-weight:600}
+.fpanel ul li::before{content:"";width:.55rem;height:.55rem;border-radius:50%;background:var(--g);margin-top:.45rem;flex:none}
+.kpi{margin-top:1rem;background:var(--ink);color:var(--bg);border-radius:14px;padding:.9rem 1rem;font-weight:600}
+.kpi .mono{color:var(--g);display:block;margin-bottom:.3rem}
+@media (max-width:900px){.funnel{grid-template-columns:1fr}.fn button{width:100%!important}}
+
+/* PARTNERS */
+.eco{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:1.2rem;align-items:stretch}
+.hub,.cust{border-radius:22px;padding:1.2rem;display:grid;align-content:center;gap:.5rem;justify-items:start;min-width:9.5rem}
+.hub{background:var(--g);color:var(--gInk)}
+.hub h3,.cust h3{font:700 1.8rem/1 var(--serif)}
+.hub small,.cust small{font-size:.8rem;opacity:.8;line-height:1.3}
+.hub .dotl{width:2.2rem;height:2.2rem;border-radius:50%;background:#fff}
+.cust{background:var(--mint);color:var(--ink)}
+.lanes{display:grid;gap:2rem;align-content:center;padding-block:.8rem}
+.lane{position:relative;display:flex;align-items:center;gap:.6rem;flex-wrap:nowrap}
+.lane>.lt{position:absolute;top:-1.15rem;left:0;font:500 .62rem/1 var(--mono);text-transform:uppercase;letter-spacing:.12em;color:var(--ink2)}
+.lane .wire{flex:1;min-width:14px;height:2px;background:var(--ink);position:relative;opacity:.55}
+.lane .wire::after{content:"";position:absolute;right:-1px;top:-4px;border-left:7px solid var(--ink);border-block:5px solid transparent}
+.lane .wire.lead{flex:0 0 22px;min-width:22px}
+.lane .wire.dash{background:repeating-linear-gradient(90deg,var(--ink) 0 6px,transparent 6px 11px)}
+.node{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:.75rem .9rem;text-align:left;display:grid;gap:.25rem;min-width:0;flex:2;transition:background .25s,transform .25s,border-color .25s;min-height:64px}
+.node b{font-size:.95rem;line-height:1.15}
+.node small{font:500 .62rem/1 var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--ink2)}
+.node:hover{transform:translateY(-3px);border-color:var(--g)}
+.node[aria-selected="true"]{background:var(--g);color:var(--gInk);border-color:var(--g)}
+.node[aria-selected="true"] small{color:var(--gInk)}
+.dpanel{margin-top:2rem;border-top:2px solid var(--ink);padding-top:1.3rem;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:1.2rem 3rem;align-items:start}
+.dpanel h3{font:700 clamp(1.8rem,3.4vw,2.6rem)/1.05 var(--serif)}
+.dpanel .tag{margin-top:.7rem}
+.dpanel dl{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.dpanel dt{font:500 .66rem/1 var(--mono);text-transform:uppercase;letter-spacing:.12em;color:var(--ink2);margin-bottom:.3rem}
+.dpanel dd{line-height:1.3;font-weight:600}
+@media (max-width:900px){
+  .eco{grid-template-columns:1fr}
+  .lane{flex-direction:column;align-items:stretch;gap:.4rem;padding-top:.8rem}
+  .lane .wire{width:2px;height:20px;min-width:0;flex:none;align-self:center}
+  .lane .wire.lead{flex:none;min-width:0;width:2px;height:20px}
+  .lane .wire::after{right:-4px;top:auto;bottom:-1px;border-left:5px solid transparent;border-right:5px solid transparent;border-top:7px solid var(--ink);border-bottom:0}
+  .dpanel{grid-template-columns:1fr}
+}
+@media (max-width:480px){.dpanel dl{grid-template-columns:1fr}}
+
+/* OUTCOME */
+.lblx{margin-bottom:1rem;color:var(--brand)}
+.learn{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+.learn li{display:grid;grid-template-columns:2.8rem 1fr;gap:.25rem .9rem;padding:1.3rem;background:var(--card);border-radius:20px;align-content:start}
+.learn .n{font:800 2rem/1 var(--serif);color:var(--brand);letter-spacing:-.04em;grid-row:span 2}
+.learn h3{font:700 clamp(1.15rem,2vw,1.4rem)/1.15 var(--serif)}
+.learn p{color:var(--ink2);font-size:.95rem}
+@media (max-width:700px){.learn{grid-template-columns:1fr}}
+.next{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem}
+.next div{background:var(--card);border-radius:18px;padding:1.2rem;display:grid;gap:.4rem;align-content:start;transition:transform .25s,box-shadow .25s}
+.next div:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.next .mono{color:var(--gText)}
+.next b{font:700 1.2rem/1.15 var(--serif)}
+.next p{font-size:.88rem;color:var(--ink2);line-height:1.3}
+@media (max-width:900px){.ogrid{grid-template-columns:1fr}.next{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.next{grid-template-columns:1fr}}
+footer{padding-block:2.5rem;font-size:.88rem;background:var(--bg)}
+footer .fg{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:2rem}
+footer p.n{max-width:30em;line-height:1.45;color:var(--ink2);margin-top:.6rem}
+footer li{padding:.3rem 0;line-height:1.35}
+footer a{text-underline-offset:3px}
+@media (max-width:800px){footer .fg{grid-template-columns:1fr}}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js .rv{opacity:1;transform:none}
+}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<symbol id="ic-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="ic-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></symbol>
+<symbol id="ic-q" viewBox="0 0 24 24"><path d="M9 9.2a3 3 0 115.6 1.5c-.8 1.2-2.6 1.6-2.6 3.3M12 17.6v.4" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></symbol>
+<symbol id="ic-bell" viewBox="0 0 24 24"><path d="M6 16.5V11a6 6 0 1112 0v5.5l1.5 2h-15zM10 21a2 2 0 004 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+<symbol id="ic-wifi" viewBox="0 0 24 24"><path d="M2.5 9a14 14 0 0119 0M5.5 12.5a9.5 9.5 0 0113 0M8.7 16a5 5 0 016.6 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="19" r="1.4" fill="currentColor"/></symbol>
+<symbol id="ic-bat" viewBox="0 0 24 24"><rect x="2" y="7" width="17" height="10" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M21.5 10v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="4.5" y="9.5" width="10" height="5" rx="1" fill="currentColor"/></symbol>
+<symbol id="ic-arrow" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="ic-down" viewBox="0 0 24 24"><path d="M12 4v15M6 13l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="ic-vol" viewBox="0 0 24 24"><path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5zM15.5 9a4 4 0 010 6M18 6.5a8 8 0 010 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="ic-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6zM9 8V6a3 3 0 016 0v2" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+<symbol id="ic-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 5-3 8.5-7 10-4-1.5-7-5-7-10V6z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+<symbol id="ic-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+</defs></svg>
+
+<nav class="nav" aria-label="Page sections">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top"><span class="bm">M</span>medibot<i></i></a>
+    <span class="navlabel">Project walkthrough · Product + GTM</span>
+    <div class="links">
+      <a href="#problem">Problem</a><a href="#research">Research</a><a href="#rivals">Competitors</a><a href="#product">Product</a><a href="#market">Market</a><a href="#strategy">Strategy</a><a href="#partners">Partners</a><a href="#outcome">Outcomes</a>
+    </div>
+  </div>
+  <span class="prog" aria-hidden="true"></span>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow"><span class="pillt">Health-tech · Product strategy</span></p>
+      <h1>Care that<br><span class="acc">keeps time.</span></h1>
+      <p class="lede">Medibot is a Wi-Fi pillbox and app that reminds seniors to take their medicines and keeps family informed.</p>
+      <div class="hchips"><span>Market research</span><span>Go-to-market strategy</span><span>Partnership strategy</span></div>
+      <p class="by"><b>Project Head</b> · Ishan Pandey, Tanvi Malode, Rohit Shrivas</p>
+      <div class="cta">
+        <a class="btn primary" href="#problem">Explore the project <svg class="i"><use href="#ic-down"/></svg></a>
+        <a class="btn ghost" href="#sixty">At a glance</a>
+      </div>
+    </div>
+
+    <div class="hero-visual" id="heroVisual">
+      <span class="pillf cap" style="top:6%;right:12%;--r:-28deg;animation-delay:-1s" aria-hidden="true"></span>
+      <span class="pillf tab-r" style="top:40%;left:2%;animation-delay:-4s" aria-hidden="true"></span>
+      <span class="pillf cap" style="bottom:6%;left:10%;--r:35deg;animation-delay:-2s" aria-hidden="true"></span>
+      <span class="pillf tab-r" style="bottom:30%;right:0;animation-delay:-5s;width:22px;height:22px" aria-hidden="true"></span>
+      <span class="pillf tab-r" style="top:2%;left:30%;animation-delay:-6s;width:20px;height:20px" aria-hidden="true"></span>
+
+      <div class="notif n1" role="status" aria-live="polite">
+        <span class="ic"><svg class="i"><use href="#ic-bell"/></svg></span>
+        <div><b>Medibot box</b>
+          <span class="when-due">Time to take your medicine</span>
+          <span class="when-taken">All done. Next at 2 PM</span></div>
+      </div>
+      <div class="notif n2">
+        <span class="ic"><svg class="i"><use href="#ic-bell"/></svg></span>
+        <div><b>Family circle</b>
+          <span class="when-due">Mom’s 8 AM dose is due</span>
+          <span class="when-taken">Mom took her 8 AM dose</span></div>
+      </div>
+
+      <div class="phone float">
+        <div class="screen" id="heroScreen">
+          <span class="notch"></span>
+          <div class="sbar"><span>8:00</span><span><svg class="i" style="width:14px;height:14px"><use href="#ic-wifi"/></svg><svg class="i" style="width:16px;height:16px"><use href="#ic-bat"/></svg></span></div>
+          <div class="app">
+            <div><p class="k">Good morning</p><p class="bigtime">8:00</p></div>
+            <div class="dose-card">
+              <div><b>Morning dose</b><small>3 medicines</small></div>
+              <button class="take" id="heroTake" aria-pressed="false"><span class="a">Mark as taken</span><span class="b"><svg class="i"><use href="#ic-check"/></svg>Taken</span></button>
+            </div>
+            <div class="mini-slots" aria-hidden="true">
+              <div><i class="first"><svg><use href="#ic-check"/></svg></i>Morn</div>
+              <div><i></i>Aft</div><div><i></i>Eve</div><div><i></i>Night</div>
+            </div>
+            <div class="nextup"><svg class="i" style="width:18px;height:18px"><use href="#ic-clock"/></svg><div><b>Next: Afternoon</b><small>2:00 PM</small></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="wrap hint">Tap “Mark as taken” on the phone</p>
+</header>
+
+<!-- ============ 60 SECONDS ============ -->
+<section class="sixty" id="sixty" aria-label="Medibot at a glance">
+  <div class="wrap">
+    <p class="mono lbl">At a glance</p>
+    <div class="six" data-stg>
+      <a class="rv" href="#problem"><span class="big">49 in 100</span><p>older adults with a chronic condition skip their medicine</p></a>
+      <a class="rv" href="#rivals"><span class="big">8 rivals</span><p>mapped, priced ₹3,500–4,900</p></a>
+      <a class="rv" href="#market"><span class="big">₹1,540 Cr</span><p>serviceable market, estimated</p></a>
+      <a class="rv" href="#strategy"><span class="big">Pune first</span><p>then India-wide</p></a>
+      <a class="rv" href="#outcome"><span class="big">Pre‑launch</span><p>strategy project</p></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 01 PROBLEM ============ -->
+<section class="sec" id="problem">
+  <div class="wrap">
+    <div class="sh rv">
+      <span class="num">01 · Problem</span>
+      <h2>Low medicine <mark class="hl">adherence</mark> in seniors</h2>
+    </div>
+
+    <div class="pgrid">
+      <div class="panelbox rv">
+        <div class="pb-h">
+          <h3>Daily dose tracker</h3>
+          <span class="tag line">Example day</span>
+        </div>
+        <button class="sw" id="daySw" role="switch" aria-checked="false"><span class="tr"></span><span>Medibot reminders: <b id="swLbl">off</b></span></button>
+        <div class="day" id="day" style="margin-top:1rem"></div>
+        <div class="dayfoot" aria-live="polite"><b id="dayCount">1 of 4</b><span class="small muted">doses taken</span></div>
+      </div>
+
+      <div class="rv" style="--d:120ms">
+        <div class="dots" id="dots" role="img" aria-label="100 dots, 49 highlighted: 49 in 100 adults over 50 with a chronic condition were not adhering to medication"></div>
+        <div class="legend"><span><i style="background:var(--warn)"></i>Not adhering (49)</span><span><i style="background:var(--mint)"></i>Adhering (51)</span></div>
+        <p class="stat49">49 in 100</p>
+        <p class="small muted" style="margin-top:.4rem">WHO SAGE survey, India 2015</p>
+      </div>
+    </div>
+
+    <div class="tiles3" data-stg>
+      <div class="tile rv"><b>149M</b><span>Indians aged 60+, growing to 347M by 2050</span></div>
+      <div class="tile rv"><b>2 in 3</b><span>seniors have a chronic disease</span></div>
+      <div class="tile rv"><b>62 in 100</b><span>skip medicine when they have 2+ conditions</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 RESEARCH ============ -->
+<section class="sec" id="research">
+  <div class="wrap">
+    <div class="sh rv">
+      <span class="num">02 · Research</span>
+      <h2>User <mark class="hl">research</mark></h2>
+    </div>
+
+    <div data-tabs class="rv">
+      <div class="steps" role="tablist" aria-label="Research steps">
+        <button role="tab" id="rt1" aria-controls="rp1" aria-selected="true"><span class="n">1</span><span class="t">The user</span></button>
+        <button role="tab" id="rt2" aria-controls="rp2" aria-selected="false"><span class="n">2</span><span class="t">The field</span></button>
+        <button role="tab" id="rt3" aria-controls="rp3" aria-selected="false"><span class="n">3</span><span class="t">What to test</span></button>
+      </div>
+
+      <div class="tp" role="tabpanel" id="rp1" aria-labelledby="rt1">
+        <div class="persona">
+          <span class="avatar" aria-hidden="true">S</span>
+          <div><h3>Mrs. Sharma, 70</h3><div class="tags"><span class="tag">Pune</span><span class="tag">Lives alone</span><span class="tag">Not tech-savvy</span></div></div>
+        </div>
+        <div class="flow3">
+          <div class="st3"><span class="mono muted">Uses it</span><b>The senior</b><span>Needs it simple and reliable</span></div>
+          <svg class="i ar"><use href="#ic-arrow"/></svg>
+          <div class="st3"><span class="mono muted">Buys it</span><b>The adult child</b><span>Worries from afar</span></div>
+          <svg class="i ar"><use href="#ic-arrow"/></svg>
+          <div class="st3"><span class="mono muted">Recommends it</span><b>Doctor, pharmacist</b><span>The B2B route</span></div>
+        </div>
+      </div>
+
+      <div class="tp" role="tabpanel" id="rp2" aria-labelledby="rt2" hidden>
+        <div class="lessons">
+          <div><span class="ic"><svg class="i"><use href="#ic-vol"/></svg></span><b>Adjustable alarm</b><span class="s">Some found it too loud</span></div>
+          <div><span class="ic"><svg class="i"><use href="#ic-bag"/></svg></span><b>Portable</b><span class="s">Most wanted to carry it</span></div>
+          <div><span class="ic"><svg class="i"><use href="#ic-shield"/></svg></span><b>Sturdy case</b><span class="s">Cardboard wore out</span></div>
+          <div><span class="ic"><svg class="i"><use href="#ic-clock"/></svg></span><b>Faster reports</b><span class="s">72 hours was too slow</span></div>
+        </div>
+        <p class="quote">“Previously, we had to supervise therapy daily. Now patients come only once a month.”</p>
+        <p class="small muted" style="margin-top:.5rem">Doctor in a TB reminder-box study · Chennai &amp; Bangalore · JMIR 2021</p>
+      </div>
+
+      <div class="tp" role="tabpanel" id="rp3" aria-labelledby="rt3" hidden>
+        <div class="hyp">
+          <div><b>Seniors use it daily</b><span>Test: Pune beta</span></div>
+          <div><b>Families will pay</b><span>Test: ₹4,500 vs early-bird</span></div>
+          <div><b>Pharmacists stock it</b><span>Test: counter pilots</span></div>
+          <div><b>Doctors recommend it</b><span>Test: clinic demo units</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 03 RIVALS ============ -->
+<section class="sec" id="rivals">
+  <div class="wrap">
+    <div class="sh rv">
+      <span class="num">03 · Competitors</span>
+      <h2>Competitor <mark class="hl">analysis</mark></h2>
+    </div>
+
+    <div data-tabs class="rv" id="compTabs">
+      <div class="ctabs" role="tablist" aria-label="Competitors" id="ctabs"></div>
+      <div id="cpanels"></div>
+    </div>
+
+    <div class="rrow">
+      <div class="rv">
+        <h3 class="h3t">Pricing comparison</h3>
+        <div class="plot" id="plot" role="img" aria-label="Dot plot of competitor prices from 3,000 to 7,000 rupees. Most sit between 3,500 and 4,900."></div>
+        <div class="bandkey"><i></i>₹3,500–4,900 band</div>
+      </div>
+      <div class="rv igs" id="igs" style="--d:120ms">
+        <h3 class="h3t">Instagram presence</h3>
+        <div class="igrow"><b>Pharmallama</b><span class="bar"><i style="--w:1"></i></span><small>2,695 · inactive</small></div>
+        <div class="igrow"><b>DoseTap</b><span class="bar"><i style="--w:.2"></i></span><small>539 · quiet 2023</small></div>
+        <div class="igrow"><b>Pillmeister</b><span class="bar"><i style="--w:.04"></i></span><small>80 · quiet 2023</small></div>
+        <div class="igrow"><b>Redicine Medsol</b><span class="tag g" style="justify-self:start">Active</span><small>only one</small></div>
+      </div>
+    </div>
+
+    <div class="matrix rv">
+      <h3 class="h3t">Competitive advantage</h3>
+      <div class="mx"><table>
+        <thead><tr><th>Edge</th><th>Pillmeister</th><th>DoseTap</th><th>Redicine</th><th>Digital Adherence</th><th>AdhereTech</th><th class="me">Medibot</th></tr></thead>
+        <tbody>
+          <tr><td>Holds the whole strip</td><td><span class="x"><svg><use href="#ic-x"/></svg></span></td><td><span class="x"><svg><use href="#ic-x"/></svg></span></td><td class="dsh">·</td><td class="dsh">·</td><td class="dsh">·</td><td class="me"><span class="ck"><svg><use href="#ic-check"/></svg></span></td></tr>
+          <tr><td>Many caretakers</td><td class="dsh">·</td><td class="dsh">·</td><td><span class="x"><svg><use href="#ic-x"/></svg></span></td><td class="dsh">·</td><td class="dsh">·</td><td class="me"><span class="ck"><svg><use href="#ic-check"/></svg></span></td></tr>
+          <tr><td>Easy setup</td><td class="dsh">·</td><td class="dsh">·</td><td><span class="x"><svg><use href="#ic-x"/></svg></span></td><td class="dsh">·</td><td class="dsh">·</td><td class="me"><span class="ck"><svg><use href="#ic-check"/></svg></span></td></tr>
+          <tr><td>Fast local delivery</td><td class="dsh">·</td><td class="dsh">·</td><td class="dsh">·</td><td><span class="x"><svg><use href="#ic-x"/></svg></span></td><td class="dsh">·</td><td class="me"><span class="ck"><svg><use href="#ic-check"/></svg></span></td></tr>
+          <tr><td>Built for India</td><td class="dsh">·</td><td class="dsh">·</td><td class="dsh">·</td><td class="dsh">·</td><td><span class="x"><svg><use href="#ic-x"/></svg></span></td><td class="me"><span class="ck"><svg><use href="#ic-check"/></svg></span></td></tr>
+        </tbody>
+      </table></div>
+      <div class="legend" style="margin-top:.8rem"><span><span class="x" style="width:18px;height:18px;vertical-align:-4px;margin-right:.4rem"><svg style="width:9px;height:9px"><use href="#ic-x"/></svg></span>Rival falls short</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 04 PRODUCT ============ -->
+<section class="sec" id="product">
+  <div class="wrap">
+    <div class="sh rv">
+      <span class="num">04 · Product</span>
+      <h2>The <mark class="hl">product</mark></h2>
+    </div>
+
+    <div class="pbx-wrap stagebox">
+      <div class="rv">
+        <div class="pb-fig" id="pbFig" data-f="strip">
+          <svg class="pbx" viewBox="0 0 640 440" role="img" aria-label="Illustration of the Medibot pillbox with its lid open, showing a full medicine strip, a speaker, a battery, Wi-Fi and a light">
+<defs>
+<linearGradient id="gBase" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#d9f1e1"/></linearGradient>
+<linearGradient id="gTray" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b6e8c7"/><stop offset="1" stop-color="#e2f7e9"/></linearGradient>
+<linearGradient id="gLid" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff" stop-opacity=".97"/><stop offset="1" stop-color="#b9ecc9" stop-opacity=".8"/></linearGradient>
+<linearGradient id="gFoil" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f8fcf9"/><stop offset="1" stop-color="#d3e6da"/></linearGradient>
+<radialGradient id="gGlow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#6fe19a" stop-opacity=".5"/><stop offset="1" stop-color="#6fe19a" stop-opacity="0"/></radialGradient>
+<radialGradient id="gLed" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#d4ffe3"/><stop offset="1" stop-color="#25c06a"/></radialGradient>
+<filter id="soft" x="-20%" y="-20%" width="140%" height="170%"><feDropShadow dx="0" dy="14" stdDeviation="13" flood-color="#0b5c2e" flood-opacity=".22"/></filter>
+</defs>
+<ellipse cx="320" cy="220" rx="310" ry="200" fill="url(#gGlow)"/>
+<ellipse cx="320" cy="398" rx="250" ry="20" fill="#0b5c2e" opacity=".15"/>
+<!-- lid -->
+<path d="M110 176 L146 66 Q151 48 170 48 L470 48 Q489 48 494 66 L530 176 Z" fill="url(#gLid)" stroke="#c9e8d5" stroke-width="2" filter="url(#soft)"/>
+<path d="M182 66 H458" stroke="#fff" stroke-width="8" stroke-linecap="round" opacity=".7"/>
+<text x="320" y="128" text-anchor="middle" font-family="Plus Jakarta Sans, system-ui, sans-serif" font-weight="800" font-size="34" fill="#12261b" letter-spacing="-1">medibot</text>
+<circle cx="408" cy="118" r="5" fill="#31cf74"/>
+<!-- base -->
+<rect x="70" y="170" width="500" height="210" rx="46" fill="url(#gBase)" stroke="#c9e8d5" stroke-width="2" filter="url(#soft)"/>
+<rect x="116" y="164" width="408" height="12" rx="6" fill="#cfeadb"/>
+<rect x="104" y="196" width="432" height="128" rx="26" fill="url(#gTray)" stroke="#a5dbb9" stroke-width="2"/>
+<rect x="128" y="212" width="384" height="96" rx="16" fill="url(#gFoil)" stroke="#b5d2c1" stroke-width="2"/>
+<circle cx="166" cy="244" r="16" fill="#f4faf6" stroke="#b9d3c4" stroke-width="2"/><circle cx="166" cy="244" r="9" fill="#e1ece5"/><circle cx="210" cy="244" r="16" fill="#f4faf6" stroke="#b9d3c4" stroke-width="2"/><circle cx="210" cy="244" r="9" fill="#e1ece5"/><circle cx="254" cy="244" r="16" fill="#f4faf6" stroke="#b9d3c4" stroke-width="2"/><circle cx="254" cy="244" r="9" fill="#e1ece5"/><circle cx="298" cy="244" r="16" fill="#f4faf6" stroke="#b9d3c4" stroke-width="2"/><circle cx="298" cy="244" r="9" fill="#e1ece5"/><circle cx="342" cy="244" r="16" fill="#f4faf6" stroke="#b9d3c4" stroke-width="2"/><circle cx="342" cy="244" r="9" fill="#e1ece5"/><circle cx="386" cy="244" r="16" fill="#f4faf6" stroke="#b9d3c4" stroke-width="2"/><g transform="rotate(-35 386 244)"><ellipse cx="386" cy="244" rx="10" ry="6.5" fill="#31cf74" stroke="#7fa690" stroke-width="1.2"/><ellipse cx="383" cy="242" rx="4" ry="1.8" fill="#fff" opacity=".75"/></g><circle cx="430" cy="244" r="16" fill="#f4faf6" stroke="#b9d3c4" stroke-width="2"/><g transform="rotate(-35 430 244)"><ellipse cx="430" cy="244" rx="10" ry="6.5" fill="#ffb3c7" stroke="#7fa690" stroke-width="1.2"/><ellipse cx="427" cy="242" rx="4" ry="1.8" fill="#fff" opacity=".75"/></g><circle cx="474" cy="244" r="16" fill="#f4faf6" stroke="#b9d3c4" stroke-width="2"/><g transform="rotate(-35 474 244)"><ellipse cx="474" cy="244" rx="10" ry="6.5" fill="#8cc8ff" stroke="#7fa690" stroke-width="1.2"/><ellipse cx="471" cy="242" rx="4" ry="1.8" fill="#fff" opacity=".75"/></g><circle cx="166" cy="284" r="16" fill="#f4faf6" stroke="#b9d3c4" stroke-width="2"/><circle cx="166" cy="284" r="9" fill="#e1ece5"/><circle cx="210" cy="284" r="16" fill="#f4faf6" stroke="#b9d3c4" stroke-width="2"/><circle cx="210" cy="284" r="9" fill="#e1ece5"/><circle cx="254" cy="284" r="16" fill="#f4faf6" stroke="#b9d3c4" stroke-width="2"/><g transform="rotate(-35 254 284)"><ellipse cx="254" cy="284" rx="10" ry="6.5" fill="#8cc8ff" stroke="#7fa690" stroke-width="1.2"/><ellipse cx="251" cy="282" rx="4" ry="1.8" fill="#fff" opacity=".75"/></g><circle cx="298" cy="284" r="16" fill="#f4faf6" stroke="#b9d3c4" stroke-width="2"/><g transform="rotate(-35 298 284)"><ellipse cx="298" cy="284" rx="10" ry="6.5" fill="#ffffff" stroke="#7fa690" stroke-width="1.2"/><ellipse cx="295" cy="282" rx="4" ry="1.8" fill="#fff" opacity=".75"/></g><circle cx="342" cy="284" r="16" fill="#f4faf6" stroke="#b9d3c4" stroke-width="2"/><g transform="rotate(-35 342 284)"><ellipse cx="342" cy="284" rx="10" ry="6.5" fill="#31cf74" stroke="#7fa690" stroke-width="1.2"/><ellipse cx="339" cy="282" rx="4" ry="1.8" fill="#fff" opacity=".75"/></g><circle cx="386" cy="284" r="16" fill="#f4faf6" stroke="#b9d3c4" stroke-width="2"/><g transform="rotate(-35 386 284)"><ellipse cx="386" cy="284" rx="10" ry="6.5" fill="#ffb3c7" stroke="#7fa690" stroke-width="1.2"/><ellipse cx="383" cy="282" rx="4" ry="1.8" fill="#fff" opacity=".75"/></g><circle cx="430" cy="284" r="16" fill="#f4faf6" stroke="#b9d3c4" stroke-width="2"/><g transform="rotate(-35 430 284)"><ellipse cx="430" cy="284" rx="10" ry="6.5" fill="#8cc8ff" stroke="#7fa690" stroke-width="1.2"/><ellipse cx="427" cy="282" rx="4" ry="1.8" fill="#fff" opacity=".75"/></g><circle cx="474" cy="284" r="16" fill="#f4faf6" stroke="#b9d3c4" stroke-width="2"/><g transform="rotate(-35 474 284)"><ellipse cx="474" cy="284" rx="10" ry="6.5" fill="#ffffff" stroke="#7fa690" stroke-width="1.2"/><ellipse cx="471" cy="282" rx="4" ry="1.8" fill="#fff" opacity=".75"/></g>
+<!-- speaker -->
+<rect x="112" y="338" width="4" height="22" rx="2" fill="#9cc9ae"/><rect x="122" y="338" width="4" height="22" rx="2" fill="#9cc9ae"/><rect x="132" y="338" width="4" height="22" rx="2" fill="#9cc9ae"/><rect x="142" y="338" width="4" height="22" rx="2" fill="#9cc9ae"/><rect x="152" y="338" width="4" height="22" rx="2" fill="#9cc9ae"/><rect x="162" y="338" width="4" height="22" rx="2" fill="#9cc9ae"/><rect x="172" y="338" width="4" height="22" rx="2" fill="#9cc9ae"/>
+<g class="waves"><path d="M192 342 q9 8 0 16"/><path d="M202 336 q14 14 0 28"/></g>
+<!-- battery -->
+<rect x="282" y="341" width="36" height="18" rx="5" fill="none" stroke="#12261b" stroke-width="2.5"/>
+<rect x="320" y="346" width="4" height="8" rx="2" fill="#12261b"/>
+<rect x="286" y="345" width="24" height="10" rx="2.5" fill="#31cf74"/>
+<!-- wifi -->
+<g fill="none" stroke="#12261b" stroke-width="3" stroke-linecap="round"><path d="M392 344 a26 26 0 0 1 36 0"/><path d="M398 351 a17 17 0 0 1 24 0"/><path d="M404 358 a8 8 0 0 1 12 0"/></g>
+<circle cx="410" cy="364" r="2.8" fill="#12261b"/>
+<!-- led -->
+<circle class="led-glow" cx="520" cy="350" r="26" fill="url(#gGlow)"/>
+<circle class="led-core" cx="520" cy="350" r="12" fill="url(#gLed)" stroke="#fff" stroke-width="3"/>
+<!-- halos -->
+<rect class="halo h-strip" x="120" y="204" width="400" height="112" rx="22"/>
+<rect class="halo h-sound" x="100" y="330" width="116" height="40" rx="20"/>
+<rect class="halo h-battery" x="268" y="332" width="70" height="36" rx="14"/>
+<circle class="halo h-wifi" cx="410" cy="352" r="28"/>
+<circle class="halo h-light" cx="520" cy="350" r="28"/>
+<!-- loose pills -->
+<g transform="translate(596 392) rotate(-24)"><rect x="-30" y="-11" width="60" height="22" rx="11" fill="#fff" stroke="#7fa690" stroke-width="2"/><path d="M-30 0 a11 11 0 0 1 11 -11 H0 V11 H-19 a11 11 0 0 1 -11 -11Z" fill="#31cf74"/></g>
+<circle cx="44" cy="392" r="15" fill="#fff" stroke="#7fa690" stroke-width="2"/><path d="M32 392 H56" stroke="#9bbfaa" stroke-width="2"/>
+<g transform="translate(34 330) rotate(30)"><rect x="-22" y="-9" width="44" height="18" rx="9" fill="#ffb3c7" stroke="#d98aa3" stroke-width="2"/></g>
+</svg>
+          <button class="hs" data-f="strip" style="left:50%;top:46.5%" aria-label="Full strip" aria-pressed="true"></button>
+          <button class="hs" data-f="sound" style="left:21.9%;top:79%" aria-label="Sound alert" aria-pressed="false"></button>
+          <button class="hs" data-f="battery" style="left:46.9%;top:79%" aria-label="Long battery" aria-pressed="false"></button>
+          <button class="hs" data-f="wifi" style="left:64%;top:79%" aria-label="Wi-Fi" aria-pressed="false"></button>
+          <button class="hs" data-f="light" style="left:81.3%;top:79%" aria-label="Light alert" aria-pressed="false"></button>
+          <div class="toast" aria-hidden="true"><span class="ic"><svg class="i"><use href="#ic-bell"/></svg></span><b>Dose due · 8:00 PM</b></div>
+        </div>
+      </div>
+      <div class="rv flist" style="--d:120ms">
+        <button data-f="strip" aria-pressed="true"><span class="n">1</span><b>Holds the full strip</b><span class="s">No daily sorting</span></button>
+        <button data-f="sound" aria-pressed="false"><span class="n">2</span><b>Sound alert</b><span class="s">Rings at dose time</span></button>
+        <button data-f="battery" aria-pressed="false"><span class="n">3</span><b>Long battery</b><span class="s">Portable</span></button>
+        <button data-f="wifi" aria-pressed="false"><span class="n">4</span><b>Wi-Fi</b><span class="s">Family stays in the loop</span></button>
+        <button data-f="light" aria-pressed="false"><span class="n">5</span><b>Light alert</b><span class="s">Glows until taken</span></button>
+        <button class="btn primary ringbtn" id="ringBtn" aria-pressed="false"><svg class="i"><use href="#ic-bell"/></svg><span id="ringLbl">Ring the box</span></button>
+      </div>
+    </div>
+
+    <div class="ptabs-wrap stagebox">
+      <div class="pstage rv">
+        <div class="phone">
+          <div class="screen">
+            <span class="notch"></span>
+            <div class="sbar"><span>8:00</span><span><svg class="i" style="width:14px;height:14px"><use href="#ic-wifi"/></svg><svg class="i" style="width:16px;height:16px"><use href="#ic-bat"/></svg></span></div>
+
+            <div class="app tp" role="tabpanel" id="pp1" aria-labelledby="pt1">
+              <div><p class="k">Today</p><h4>Your doses</h4></div>
+              <ul class="doses">
+                <li class="ok"><span class="dc"><svg><use href="#ic-check"/></svg></span><div><b>Morning</b><small>8:00 AM</small></div><span class="ds">Taken</span></li>
+                <li class="ok"><span class="dc"><svg><use href="#ic-check"/></svg></span><div><b>Afternoon</b><small>2:00 PM</small></div><span class="ds">Taken</span></li>
+                <li class="due" id="eveRow"><span class="dc"><svg><use href="#ic-check"/></svg></span><div><b>Evening</b><small>8:00 PM</small></div><button class="mbtn" id="eveBtn" aria-pressed="false">Mark taken</button></li>
+                <li><span class="dc"><svg><use href="#ic-check"/></svg></span><div><b>Night</b><small>10:00 PM</small></div><span class="ds">Later</span></li>
+              </ul>
+              <div><div class="pgbar"><i id="pgFill" style="width:50%"></i></div><div class="pgtxt"><span id="pgTxt" aria-live="polite">2 of 4 taken</span><span>Today</span></div></div>
+              <div class="nextup" style="margin-top:auto"><svg class="i" style="width:18px;height:18px"><use href="#ic-bell"/></svg><div><b>Family is following</b><small>Brother gets missed-dose alerts</small></div></div>
+            </div>
+
+            <div class="app tp" role="tabpanel" id="pp2" aria-labelledby="pt2" hidden>
+              <div><p class="k">New medicine</p><h4>Set up in seconds</h4></div>
+              <ol class="su">
+                <li class="done"><i><svg style="width:13px;height:13px"><use href="#ic-check"/></svg></i><span>Slide the strip into the box</span></li>
+                <li><i>2</i><div>Pick the times<div class="chips" id="timeChips"><button aria-pressed="true">Morning</button><button aria-pressed="false">Afternoon</button><button aria-pressed="true">Evening</button><button aria-pressed="false">Night</button></div></div></li>
+                <li><i>3</i><span>Add family members</span></li>
+              </ol>
+              <p class="goal">Goal: set up in about 10 seconds</p>
+            </div>
+
+            <div class="app tp" role="tabpanel" id="pp3" aria-labelledby="pt3" hidden>
+              <div><p class="k">Care circle</p><h4>Who follows along</h4></div>
+              <ul class="ppl">
+                <li><span class="av">Y</span><div><b>You</b><small>Every dose update</small></div></li>
+                <li><span class="av">B</span><div><b>Brother</b><small>Missed-dose alerts</small></div></li>
+                <li class="addrow"><span class="add">+ Add another caretaker</span></li>
+              </ul>
+              <div class="feed"><b>Latest</b>Mom took her 8:00 AM dose.</div>
+            </div>
+
+            <div class="app tp" role="tabpanel" id="pp4" aria-labelledby="pt4" hidden>
+              <div><p class="k">Device</p><h4>Medibot box</h4></div>
+              <div>
+                <div class="drow"><span><svg class="i"><use href="#ic-wifi"/></svg>Wi-Fi</span><b>Connected</b></div>
+                <div class="drow"><span><svg class="i"><use href="#ic-bat"/></svg>Battery</span><b>Long-life</b></div>
+                <div class="drow"><span>Medicine strip</span><b>Full strip loaded</b></div>
+                <div class="drow"><span>Sound alert</span><button class="tg" role="switch" aria-checked="true" aria-label="Sound alert"></button></div>
+                <div class="drow"><span>Light alert</span><button class="tg" role="switch" aria-checked="true" aria-label="Light alert"></button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rv" style="--d:120ms" id="ptabsBox">
+        <p class="mono muted" style="margin-bottom:.8rem">App screens</p>
+        <div class="ptabs" role="tablist" aria-label="App screens">
+          <button role="tab" id="pt1" aria-controls="pp1" aria-selected="true"><span class="n">1</span><b>Today</b><span class="w">The day at a glance</span></button>
+          <button role="tab" id="pt2" aria-controls="pp2" aria-selected="false"><span class="n">2</span><b>Setup</b><span class="w">Simple, since rivals lose people here</span></button>
+          <button role="tab" id="pt3" aria-controls="pp3" aria-selected="false"><span class="n">3</span><b>Family</b><span class="w">Many caretakers, not one</span></button>
+          <button role="tab" id="pt4" aria-controls="pp4" aria-selected="false"><span class="n">4</span><b>Device</b><span class="w">Sound and light controls</span></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="simwrap stagebox rv">
+      <div class="simhead">
+        <h3>Reminder flow</h3>
+        <button class="btn primary" id="simBtn"><svg class="i"><use href="#ic-bell"/></svg><span id="simLbl">Play a reminder</span></button>
+      </div>
+      <div class="beats" id="beats" aria-live="polite">
+        <div class="beat" data-b="1">
+          <span class="lab">1 · The box</span>
+          <svg class="dev" viewBox="0 0 220 150" role="img" aria-label="Medibot box with a glowing light">
+            <path class="wave w1" d="M186 36c8 6 8 16 0 22"/><path class="wave w2" d="M196 28c13 10 13 28 0 38"/>
+            <rect x="12" y="44" width="196" height="92" rx="24" fill="var(--mint)" stroke="var(--line)" stroke-width="3"/>
+            <path d="M12 76h196" stroke="var(--line)" stroke-width="3"/>
+            <rect x="30" y="88" width="112" height="34" rx="9" fill="var(--card)" stroke="var(--line)" stroke-width="2"/>
+            <g fill="var(--ink)" opacity=".7"><circle cx="46" cy="105" r="6"/><circle cx="66" cy="105" r="6"/><circle cx="86" cy="105" r="6"/><circle cx="106" cy="105" r="6" opacity=".3"/><circle cx="126" cy="105" r="6" opacity=".3"/></g>
+            <circle class="led" cx="176" cy="105" r="13"/>
+          </svg>
+          <p>Lights up and rings at dose time</p>
+        </div>
+        <svg class="i bar-ar"><use href="#ic-arrow"/></svg>
+        <div class="beat" data-b="2">
+          <span class="lab">2 · The phone</span>
+          <div class="mnotif"><span class="ic"><svg class="i"><use href="#ic-bell"/></svg></span><div><b>Evening dose due</b>Tap to mark as taken</div></div>
+          <p>The app nudges too</p>
+        </div>
+        <svg class="i bar-ar"><use href="#ic-arrow"/></svg>
+        <div class="beat" data-b="3">
+          <span class="lab">3 · The family</span>
+          <div class="mnotif"><span class="ic"><svg class="i"><use href="#ic-check"/></svg></span><div><b>Mom took her dose</b>Shared with the care circle</div></div>
+          <p>Caretakers know, no call needed</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 05 MARKET ============ -->
+<section class="sec" id="market">
+  <div class="wrap">
+    <div class="sh rv">
+      <span class="num">05 · Market</span>
+      <h2>Market <mark class="hl">opportunity</mark></h2>
+    </div>
+
+    <div class="mgrid">
+      <div class="rv">
+        <svg class="circ" viewBox="0 0 440 440" role="img" aria-label="Nested circles: TAM largest, SAM inside it, SOM smallest" id="circ">
+          <circle cx="220" cy="220" r="210" fill="var(--mint)"/>
+          <circle cx="220" cy="296" r="134" fill="var(--g)"/>
+          <circle cx="220" cy="368" r="62" fill="var(--ink)"/>
+          <text x="220" y="62" text-anchor="middle" font-size="15" font-weight="800" letter-spacing="2" fill="var(--ink)">TAM · INDIA</text>
+          <text x="220" y="104" text-anchor="middle" font-size="38" fill="var(--ink)" id="cTam">₹44,924 Cr</text>
+          <text x="220" y="196" text-anchor="middle" font-size="14" font-weight="800" letter-spacing="2" fill="var(--gInk)">SAM · INDIA</text>
+          <text x="220" y="234" text-anchor="middle" font-size="34" fill="var(--gInk)" id="cSam">₹1,541 Cr</text>
+          <text x="220" y="352" text-anchor="middle" font-size="11" font-weight="800" letter-spacing="1.5" fill="var(--bg)">SOM · PUNE</text>
+          <text x="220" y="384" text-anchor="middle" font-size="25" fill="var(--bg)" id="cSom">₹1.35 Cr</text>
+        </svg>
+      </div>
+
+      <div class="rv" style="--d:120ms">
+        <ul class="tiers">
+          <li><span class="k">TAM</span><span class="v" id="tTam">₹44,924 Cr</span><span class="w" id="wTam">99.8M seniors with a chronic illness</span></li>
+          <li><span class="k">SAM</span><span class="v" id="tSam">₹1,541 Cr</span><span class="w" id="wSam">3.4M urban seniors who skip medicine and can afford it</span></li>
+          <li><span class="k">SOM</span><span class="v" id="tSom">₹1.35 Cr</span><span class="w" id="wSom">3,000 devices in Pune, year one</span></li>
+        </ul>
+        <div class="ctl">
+          <div class="hd"><b>Adjust the inputs</b><button class="rs" id="rsBtn">Reset</button></div>
+          <label for="rPrice">Device price <output id="oPrice">₹4,500</output><input id="rPrice" type="range" min="3000" max="7000" step="100" value="4500"></label>
+          <label for="rUrban">Urban seniors <output id="oUrban">35%</output><input id="rUrban" type="range" min="20" max="60" step="1" value="35"></label>
+          <label for="rAff">Can afford it <output id="oAff">20%</output><input id="rAff" type="range" min="5" max="40" step="1" value="20"></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="somrow">
+      <div class="rv">
+        <h3 class="h3t" style="margin-bottom:.2rem">How the 3,000 target is built</h3>
+        <div class="stack" id="stack"><div class="s1">1,800</div><div class="s2">1,200</div></div>
+        <div class="stackl"><span>50 pharmacies × 3 a month × 12</span><span>Clinics, NGOs, camps, online</span></div>
+      </div>
+      <div class="rv" style="--d:120ms">
+        <details class="how">
+          <summary>How the numbers are built</summary>
+          <div class="tbl"><table>
+            <tr><td>Indians aged 60+<span class="tag">Source</span></td><td class="r">149M</td></tr>
+            <tr><td>With a chronic illness, 67%<span class="tag">Source</span></td><td class="r" id="bChr">99.8M · TAM</td></tr>
+            <tr><td>Urban<span class="tag g">Estimate</span></td><td class="r" id="bUrb">34.9M</td></tr>
+            <tr><td>Not adhering, 49%<span class="tag">Source</span></td><td class="r" id="bNon">17.1M</td></tr>
+            <tr><td>Can afford the device<span class="tag g">Estimate</span></td><td class="r" id="bAff">3.4M · SAM</td></tr>
+            <tr><td>Pune SAM: 11.5M people × 10.5% aged 60+ × 60% urban × 67% × 49% × afford<span class="tag g">Estimate</span></td><td class="r" id="bPune">47.6k</td></tr>
+            <tr><td>SOM share of Pune SAM</td><td class="r" id="bShare">6.3%</td></tr>
+          </table></div>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 06 STRATEGY ============ -->
+<section class="sec" id="strategy">
+  <div class="wrap">
+    <div class="sh rv">
+      <span class="num">06 · Strategy</span>
+      <h2>Go-to-market <mark class="hl">strategy</mark></h2>
+    </div>
+
+    <div class="smap" data-stg>
+      <div class="sn rv">
+        <span class="q">Who</span>
+        <h3>Target customer</h3>
+        <ul>
+          <li><small>Uses</small>Mrs. Sharma, 70, Pune</li>
+          <li><small>Buys</small>Adult children, caregivers</li>
+          <li><small>Later</small>Hospitals, pharmacies</li>
+        </ul>
+      </div>
+      <span class="joint" aria-hidden="true"><svg class="i"><use href="#ic-arrow"/></svg></span>
+      <div class="sn mid rv">
+        <span class="q">Promise</span>
+        <h3>Value proposition</h3>
+        <div class="pr"><span>Never miss a dose</span><span>Full strip</span><span>Sound + light</span><span>Family alerts</span><span>Wi-Fi</span></div>
+      </div>
+      <span class="joint" aria-hidden="true"><svg class="i"><use href="#ic-arrow"/></svg></span>
+      <div class="sn rv" data-tabs>
+        <span class="q">Where</span>
+        <div class="chtabs" role="tablist" aria-label="Channels">
+          <button role="tab" id="ct1" aria-controls="cp1" aria-selected="true">Online</button>
+          <button role="tab" id="ct2" aria-controls="cp2" aria-selected="false">Pune offline</button>
+        </div>
+        <ul class="chl tp" role="tabpanel" id="cp1" aria-labelledby="ct1">
+          <li>Instagram &amp; YouTube reels</li><li>Google ads</li><li>WhatsApp</li><li>Influencers</li><li>Free 7-day trial</li>
+        </ul>
+        <ul class="chl tp" role="tabpanel" id="cp2" aria-labelledby="ct2" hidden>
+          <li>Clinics</li><li>50+ pharmacies</li><li>Health camps</li><li>NGOs</li><li>Yoga &amp; marathons</li><li>Autos &amp; hoardings</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="launch">
+      <div class="rv">
+        <h3 class="h3t">Launch phases</h3>
+        <div class="road" id="road">
+          <div class="ph-n"><b>Phase 1</b><h4>Beta</h4><p>Test and refine</p></div>
+          <div class="ph-n"><b>Phase 2</b><h4>Pune</h4><p>Soft launch</p></div>
+          <div class="ph-n"><b>Phase 3</b><h4>India</h4><p>New channels</p></div>
+        </div>
+        <div class="b2b" aria-label="B2C2B path">
+          <div><small>First</small>Sell to families</div>
+          <div><small>Then</small>Prove repeat use</div>
+          <div><small>Then</small>Open B2B</div>
+        </div>
+      </div>
+      <div class="rv" style="--d:120ms">
+        <h3 class="h3t">Launch month plan</h3>
+        <ul class="weeks">
+          <li><span class="wk">W1</span><div><b>Teaser</b><span>Local teasers and captions</span></div></li>
+          <li><span class="wk">W2</span><div><b>Features</b><span>Carousels, search ads</span></div></li>
+          <li><span class="wk">W3</span><div><b>Retarget</b><span>Pune testimonials</span></div></li>
+          <li><span class="wk">W4</span><div><b>Convert</b><span>Geo-ads, early-bird offers</span></div></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="funnel" data-tabs>
+      <div class="rv">
+        <h3 class="h3t">Marketing funnel</h3>
+        <div class="fn" id="fn" role="tablist" aria-label="Funnel stages">
+          <button role="tab" id="ft1" aria-controls="fp1" aria-selected="true" style="--w:100%"><b>1 · Awareness</b><small>Recognise the problem</small></button>
+          <button role="tab" id="ft2" aria-controls="fp2" aria-selected="false" style="--w:88%"><b>2 · Interest</b><small>See how it helps</small></button>
+          <button role="tab" id="ft3" aria-controls="fp3" aria-selected="false" style="--w:76%"><b>3 · Consideration</b><small>Build trust</small></button>
+          <button role="tab" id="ft4" aria-controls="fp4" aria-selected="false" style="--w:64%"><b>4 · Purchase</b><small>Make buying easy</small></button>
+          <button role="tab" id="ft5" aria-controls="fp5" aria-selected="false" style="--w:52%"><b>5 · Community</b><small>Keep and grow</small></button>
+        </div>
+      </div>
+      <div class="rv fpanel" style="--d:120ms">
+        <div class="tp" role="tabpanel" id="fp1" aria-labelledby="ft1"><ul><li>Reels about forgetting doses</li><li>Eldercare influencers</li><li>#MyMedibotStory</li></ul><div class="kpi"><span class="mono">KPIs</span>Reach, views, hashtag use</div></div>
+        <div class="tp" role="tabpanel" id="fp2" aria-labelledby="ft2" hidden><ul><li>“Set up Mom’s reminders in 10 seconds”</li><li>Quiz ads</li><li>Free 7-day trial</li></ul><div class="kpi"><span class="mono">KPIs</span>Click-through, quiz completions, sign-ups</div></div>
+        <div class="tp" role="tabpanel" id="fp3" aria-labelledby="ft3" hidden><ul><li>Doctor-led videos</li><li>Live demos at senior gatherings</li><li>Pharmacy and clinic partners</li></ul><div class="kpi"><span class="mono">KPIs</span>Demo requests, enquiries, reviews</div></div>
+        <div class="tp" role="tabpanel" id="fp4" aria-labelledby="ft4" hidden><ul><li>Quick checkout with EMI</li><li>First-100-buyers discount</li><li>30-day guarantee</li></ul><div class="kpi"><span class="mono">KPIs</span>Conversion, cost per sale, cart drop-off</div></div>
+        <div class="tp" role="tabpanel" id="fp5" aria-labelledby="ft5" hidden><ul><li>24/7 support</li><li>Points for referrals</li><li>WhatsApp health-tips group</li></ul><div class="kpi"><span class="mono">KPIs</span>Referrals, 30-day use, repeat orders</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 07 PARTNERS ============ -->
+<section class="sec" id="partners">
+  <div class="wrap">
+    <div class="sh rv">
+      <span class="num">07 · Partners</span>
+      <h2>Partnership <mark class="hl">ecosystem</mark></h2>
+    </div>
+
+    <div class="rv" data-tabs>
+      <div class="eco">
+        <div class="hub"><span class="dotl"></span><h3>Medibot</h3><small>Device + app</small></div>
+
+        <div class="lanes" role="tablist" aria-label="Partners">
+          <div class="lane"><span class="lt">Distribution</span><span class="wire lead"></span>
+            <button class="node" role="tab" id="nd1" aria-controls="dp1" aria-selected="true"><small>Exploring</small><b>Pharma distributors</b></button>
+            <span class="wire"></span>
+            <button class="node" role="tab" id="nd2" aria-controls="dp2" aria-selected="false"><small>Planned · 50+ in Pune</small><b>Pharmacies</b></button>
+            <span class="wire"></span>
+          </div>
+          <div class="lane"><span class="lt">Medical trust</span><span class="wire lead dash"></span>
+            <button class="node" role="tab" id="nd3" aria-controls="dp3" aria-selected="false"><small>Planned</small><b>Doctors, clinics &amp; hospitals</b></button>
+            <span class="wire dash"></span>
+          </div>
+          <div class="lane"><span class="lt">Community</span><span class="wire lead dash"></span>
+            <button class="node" role="tab" id="nd4" aria-controls="dp4" aria-selected="false"><small>Proposed</small><b>NGOs &amp; eldercare groups</b></button>
+            <span class="wire dash"></span>
+            <button class="node" role="tab" id="nd5" aria-controls="dp5" aria-selected="false"><small>Planned</small><b>Health camps &amp; satsangs</b></button>
+            <span class="wire dash"></span>
+          </div>
+        </div>
+
+        <div class="cust"><h3>Seniors &amp; caregivers</h3><small>Where value lands</small></div>
+      </div>
+
+      <div class="dpanel tp" role="tabpanel" id="dp1" aria-labelledby="nd1">
+        <div><h3>Pharma distributors</h3><span class="tag violet">Exploring</span></div>
+        <dl><div><dt>Role</dt><dd>Supply pharmacies beyond Pune in Phase 3</dd></div><div><dt>Next</dt><dd>Shortlist regional distributors</dd></div></dl>
+      </div>
+      <div class="dpanel tp" role="tabpanel" id="dp2" aria-labelledby="nd2" hidden>
+        <div><h3>Pharmacies</h3><span class="tag blue">Planned · not signed</span></div>
+        <dl><div><dt>We give</dt><dd>Counter display, launch offers, staff training</dd></div><div><dt>They give</dt><dd>A trusted point of sale in 50+ Pune pharmacies</dd></div></dl>
+      </div>
+      <div class="dpanel tp" role="tabpanel" id="dp3" aria-labelledby="nd3" hidden>
+        <div><h3>Doctors, clinics &amp; hospitals</h3><span class="tag blue">Planned · not signed</span></div>
+        <dl><div><dt>We give</dt><dd>Demo units, free units for selected doctors</dd></div><div><dt>They give</dt><dd>Recommendation to patients who miss doses</dd></div></dl>
+      </div>
+      <div class="dpanel tp" role="tabpanel" id="dp4" aria-labelledby="nd4" hidden>
+        <div><h3>NGOs &amp; eldercare groups</h3><span class="tag pink">Proposed</span><p class="small muted" style="margin-top:.6rem">HelpAge India · Anand Yatri Elder Foundation</p></div>
+        <dl><div><dt>We give</dt><dd>Subsidised units, adherence workshops</dd></div><div><dt>They give</dt><dd>Credibility and access to seniors</dd></div></dl>
+      </div>
+      <div class="dpanel tp" role="tabpanel" id="dp5" aria-labelledby="nd5" hidden>
+        <div><h3>Health camps &amp; satsangs</h3><span class="tag blue">Planned</span></div>
+        <dl><div><dt>We give</dt><dd>Demo kiosks, free BP and sugar tests</dd></div><div><dt>They give</dt><dd>Seniors gathered in one place</dd></div></dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 08 OUTCOME ============ -->
+<section class="sec" id="outcome">
+  <div class="wrap">
+    <div class="sh rv">
+      <span class="num">08 · Outcomes</span>
+      <h2>Outcomes &amp; <mark class="hl">learnings</mark></h2>
+    </div>
+
+    <div class="stagebox">
+      <p class="mono lblx rv">Key learnings</p>
+      <ol class="learn rv">
+        <li><span class="n">1</span><h3>The buyer isn’t the user</h3><p>Speak to the adult child</p></li>
+        <li><span class="n">2</span><h3>Same price, so trust decides</h3><p>Doctors, pharmacists, NGOs</p></li>
+        <li><span class="n">3</span><h3>Size it before you spend</h3><p>100M ceiling, 3,000 target</p></li>
+        <li><span class="n">4</span><h3>Know your critical path</h3><p>Regulatory approval comes first</p></li>
+      </ol>
+      <p class="mono lblx rv" style="margin-top:clamp(2rem,4vw,3rem)">Next steps</p>
+      <div class="next rv">
+        <div><span class="mono">01</span><b>Run the beta</b><p>Real users in Pune</p></div>
+        <div><span class="mono">02</span><b>Test the price</b><p>₹4,500 vs early-bird</p></div>
+        <div><span class="mono">03</span><b>Measure repeat use</b><p>The trigger for B2B</p></div>
+        <div><span class="mono">04</span><b>Settle regulation</b><p>Before any real launch</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap fg">
+    <div>
+      <p class="mono muted">Notes</p>
+      <p class="n">Market figures are estimates and ₹4,500 is a benchmark price, not a decision. Product screens and the pillbox are concept visuals. Partners are proposed; none are signed.</p>
+    </div>
+    <div>
+      <p class="mono muted">Sources</p>
+      <ul>
+        <li><a href="https://www.cnbc.com/2023/10/02/indias-elderly-population-will-double-and-overtake-children-by-2050.html" target="_blank" rel="noopener">UNFPA India Ageing Report 2023, via CNBC</a></li>
+        <li><a href="https://www.downtoearth.org.in/news/health/almost-70-senior-citizens-in-india-have-a-chronic-illness-74944" target="_blank" rel="noopener">LASI, via Down To Earth</a></li>
+        <li><a href="https://www.frontiersin.org/articles/10.3389/fphar.2023.1183818/full" target="_blank" rel="noopener">Tolley et al., Frontiers in Pharmacology, 2023 (WHO SAGE)</a></li>
+        <li><a href="https://www.indiastatdistricts.com/MAHARASHTRA/pune-district" target="_blank" rel="noopener">IndiaStat: Pune district population</a></li>
+        <li><a href="https://www.jmir.org/2021/6/e23294" target="_blank" rel="noopener">JMIR 2021: reminder box for TB patients</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var D=document, root=D.documentElement; root.classList.add('js');
+  var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function $(s,c){return (c||D).querySelector(s)} function $$(s,c){return Array.prototype.slice.call((c||D).querySelectorAll(s))}
+
+  /* smooth in-page scroll */
+  $$('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){
+    var id=a.getAttribute('href').slice(1), t=id==='top'?D.body:D.getElementById(id); if(!t)return;
+    e.preventDefault();
+    window.scrollTo({top:id==='top'?0:t.getBoundingClientRect().top+window.scrollY-72,behavior:rm?'auto':'smooth'});
+    if(id!=='top'){t.setAttribute('tabindex','-1');t.focus({preventScroll:true});}
+  })});
+
+  /* stagger + reveal */
+  $$('[data-stg]').forEach(function(p){Array.prototype.forEach.call(p.children,function(c,i){c.style.setProperty('--d',(i*90)+'ms')})});
+  var io=('IntersectionObserver' in window)?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -6% 0px'}):null;
+  function watch(){$$('.rv,#dots,#plot,#stack,#road,#fn,#igs').forEach(function(el){io?io.observe(el):el.classList.add('vis')})}
+
+  /* progress + active nav */
+  var prog=$('.prog'), ticking=false;
+  function upd(){var h=D.documentElement.scrollHeight-innerHeight; prog.style.setProperty('--p',h>0?Math.min(1,scrollY/h):0); ticking=false}
+  addEventListener('scroll',function(){if(!ticking){ticking=true;requestAnimationFrame(upd)}},{passive:true}); upd();
+  var links=$$('.links a'), secs=['problem','research','rivals','product','market','strategy','partners','outcome'].map(function(i){return D.getElementById(i)});
+  if(io){var so=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){links.forEach(function(l){var on=l.getAttribute('href')==='#'+e.target.id;if(on){l.setAttribute('aria-current','true');var c=l.parentNode;c.scrollLeft+=(l.getBoundingClientRect().left-c.getBoundingClientRect().left)-(c.clientWidth-l.offsetWidth)/2}else l.removeAttribute('aria-current')})}})},{rootMargin:'-40% 0px -55% 0px'});secs.forEach(function(s){s&&so.observe(s)})}
+
+  /* generic tabs */
+  function tabs(c){
+    var tl=$('[role=tablist]',c); if(!tl)return; var tb=$$('[role=tab]',tl);
+    function sel(t,f){tb.forEach(function(b){var on=b===t;b.setAttribute('aria-selected',on?'true':'false');b.tabIndex=on?0:-1;var p=D.getElementById(b.getAttribute('aria-controls'));if(p)p.hidden=!on});if(f)t.focus()}
+    tb.forEach(function(b,i){b.addEventListener('click',function(){sel(b)});b.addEventListener('keydown',function(e){var n=null,k=e.key;
+      if(k==='ArrowRight'||k==='ArrowDown')n=tb[(i+1)%tb.length];else if(k==='ArrowLeft'||k==='ArrowUp')n=tb[(i-1+tb.length)%tb.length];else if(k==='Home')n=tb[0];else if(k==='End')n=tb[tb.length-1];
+      if(n){e.preventDefault();sel(n,true)}})});
+    sel(tb.filter(function(b){return b.getAttribute('aria-selected')==='true'})[0]||tb[0]);
+  }
+
+  /* competitors (built from data) */
+  var C=[
+   {n:'Pillmeister',t:'Smart pillbox',loc:'Bangalore',p:'₹4,500',was:'₹6,500',f:['21 modules','3 caretakers','Patented'],sold:['Website','Amazon','Flipkart'],gap:'Can’t store a whole strip',edge:'Holds the whole strip'},
+   {n:'DoseTap',t:'Smart pillbox',loc:'Bangalore',p:'₹3,500',f:['4 compartments','Bluetooth','Patented'],sold:['Website','Amazon','Flipkart'],gap:'Not built for 2–3 month courses',edge:'Detailed reports for serious conditions'},
+   {n:'Redicine Medsol',t:'Smart pillbox',loc:'Ahmedabad',p:'₹4,500–4,900',f:['Strip storage','Tracks 10 medicines','Patented'],sold:['Amazon','Flipkart','JioMart','Tata 1mg'],gap:'Hard setup, Wi-Fi issues, one app user',edge:'Easy setup, many caretakers'},
+   {n:'Medper',t:'Smart pillbox',loc:'Kolkata',p:'₹4,500',f:['9 compartments','App'],sold:['Tata 1mg','Amazon','Flipkart'],gap:'Closest match on features',edge:'Pharmacy, clinic and NGO trust'},
+   {n:'Digital Adherence Tech',t:'Adherence box',loc:'South Africa',p:'₹4,511',f:['Built for TB','WHO partner','6-month battery'],sold:['Website','App'],gap:'Delivery takes 3–6 months',edge:'Local stock, fast delivery'},
+   {n:'Pharmallama',t:'Pre-sorted sachets',loc:'India',p:'Not comparable',f:['Indirect rival'],sold:['App','Website'],gap:'Legal notice; sells at full MRP',edge:'A device, not a pharmacy'},
+   {n:'AdhereTech',t:'Smart pill bottle',loc:'USA',p:'Free to patients',f:['Cellular link','Pharma pays'],sold:['US pharma programs'],gap:'Not built for India',edge:'Advanced features, local support'},
+   {n:'Karmadost',t:'Reminder app',loc:'Jaipur',p:'App only',f:['App'],sold:['App'],gap:'App not accessible, quiet online',edge:'A full device plus app'}
+  ];
+  var ct=$('#ctabs'), cp=$('#cpanels'), th='', ph='';
+  C.forEach(function(c,i){
+    th+='<button role="tab" id="cT'+i+'" aria-controls="cP'+i+'" aria-selected="'+(i===0)+'">'+c.n+'</button>';
+    ph+='<div class="tp cpanel" role="tabpanel" id="cP'+i+'" aria-labelledby="cT'+i+'"'+(i?' hidden':'')+'>'+
+      '<div class="cl"><p class="mono muted">'+c.t+' · '+c.loc+'</p><h3>'+c.n+'</h3>'+
+      '<div class="cprice"><b>'+c.p+'</b>'+(c.was?'<s>was '+c.was+'</s>':'')+'</div>'+
+      '<div class="chipsrow">'+c.f.map(function(x){return '<span class="tag">'+x+'</span>'}).join('')+'</div>'+
+      '<div class="chipsrow">'+c.sold.map(function(x){return '<span class="tag line">'+x+'</span>'}).join('')+'</div></div>'+
+      '<svg class="i go"><use href="#ic-arrow"/></svg>'+
+      '<div class="gap"><span class="mono">Their gap</span><b>'+c.gap+'</b></div>'+
+      '<div class="edge"><span class="mono">Medibot’s edge</span><b>'+c.edge+'</b></div></div>';
+  });
+  ct.innerHTML=th; cp.innerHTML=ph;
+  $$('[data-tabs]').forEach(tabs);
+  tabs($('#ptabsBox'));
+  watch();
+
+  /* hero toggle */
+  var hb=$('#heroTake'), hs=$('#heroScreen'), hv=$('#heroVisual');
+  hb.addEventListener('click',function(){var t=hb.getAttribute('aria-pressed')!=='true';hb.setAttribute('aria-pressed',t?'true':'false');hs.classList.toggle('taken',t);hv.classList.toggle('taken',t)});
+
+  /* day of doses */
+  var slots=[{t:'8 AM',n:'Morning',off:'ok'},{t:'2 PM',n:'Afternoon',off:'miss'},{t:'8 PM',n:'Evening',off:'miss'},{t:'10 PM',n:'Night',off:'unsure'}];
+  var offTxt={ok:'Taken',miss:'Forgot',unsure:'Not sure'}, dayEl=$('#day');
+  var ico='<svg class="i-ok"><use href="#ic-check"/></svg><svg class="i-x"><use href="#ic-x"/></svg><svg class="i-q"><use href="#ic-q"/></svg>';
+  dayEl.innerHTML=slots.map(function(s,i){return '<div class="slot" style="--k:'+i+'"><span class="t">'+s.t+'</span><span class="c">'+ico+'</span><span class="n">'+s.n+'</span><span class="st"></span></div>'}).join('');
+  var sw=$('#daySw');
+  function renderDay(on){
+    $$('.slot',dayEl).forEach(function(el,i){var st=on?'ok':slots[i].off;el.className='slot '+st;$('.st',el).textContent=on?'Taken':offTxt[st]});
+    dayEl.classList.remove('on'); if(on){void dayEl.offsetWidth;dayEl.classList.add('on')}
+    $('#swLbl').textContent=on?'on':'off'; $('#dayCount').textContent=on?'4 of 4':'1 of 4';
+  }
+  sw.addEventListener('click',function(){var on=sw.getAttribute('aria-checked')!=='true';sw.setAttribute('aria-checked',on?'true':'false');renderDay(on)});
+  renderDay(false);
+
+  /* dots */
+  var dots=$('#dots'); for(var i=0;i<100;i++){var s=D.createElement('span');s.style.setProperty('--i',i);if(i<49)s.className='x';dots.appendChild(s)}
+
+  /* price plot */
+  var P=[{n:'DoseTap',v:'₹3,500',p:3500},{n:'Pillmeister',v:'₹6,500 → ₹4,500',p:4500,was:6500},{n:'Medper',v:'₹4,500',p:4500},{n:'Digital Adherence',v:'₹4,511',p:4511},{n:'Redicine Medsol',v:'₹4,500–4,900',lo:4500,hi:4900}];
+  function pc(v){return ((v-3000)/4000*100)}
+  var pl='<div class="axis" aria-hidden="true">'+[3000,4000,5000,6000,7000].map(function(v){return '<span style="left:'+pc(v)+'%">₹'+v.toLocaleString('en-IN')+'</span>'}).join('')+'</div>';
+  P.forEach(function(r,k){var tr;
+    if(r.lo){tr='<em style="left:'+pc(r.lo)+'%;width:'+(pc(r.hi)-pc(r.lo))+'%;--k:'+k+'"></em>'}
+    else if(r.was){tr='<u style="left:'+pc(r.p)+'%;width:'+(pc(r.was)-pc(r.p))+'%"></u><i class="o" style="left:'+pc(r.was)+'%;--k:'+k+'"></i><i style="left:'+pc(r.p)+'%;--k:'+k+'"></i>'}
+    else{tr='<i style="left:'+pc(r.p)+'%;--k:'+k+'"></i>'}
+    pl+='<div class="prow"><b>'+r.n+'</b><span class="v">'+r.v+'</span><div class="trk" aria-hidden="true">'+tr+'</div></div>'});
+  $('#plot').innerHTML=pl;
+
+  /* pillbox features + ring */
+  var fig=$('#pbFig'), fb=$$('[data-f]',D).filter(function(b){return b.tagName==='BUTTON'});
+  function setF(f){fig.setAttribute('data-f',f);fb.forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute('data-f')===f?'true':'false')})}
+  fb.forEach(function(b){b.addEventListener('click',function(){setF(b.getAttribute('data-f'))})});
+  var rb=$('#ringBtn');
+  rb.addEventListener('click',function(){var on=rb.getAttribute('aria-pressed')!=='true';rb.setAttribute('aria-pressed',on?'true':'false');fig.classList.toggle('ring',on);$('#ringLbl').textContent=on?'Silence':'Ring the box'});
+
+  /* product: mark taken, chips, toggles */
+  var eb=$('#eveBtn'), er=$('#eveRow');
+  eb.addEventListener('click',function(){var t=eb.getAttribute('aria-pressed')!=='true';eb.setAttribute('aria-pressed',t?'true':'false');eb.textContent=t?'Undo':'Mark taken';er.classList.toggle('ok',t);er.classList.toggle('due',!t);
+    $('#pgFill').style.width=t?'75%':'50%';$('#pgTxt').textContent=t?'3 of 4 taken':'2 of 4 taken'});
+  $$('#timeChips button').forEach(function(b){b.addEventListener('click',function(){b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')==='true'?'false':'true')})});
+  $$('.tg').forEach(function(b){b.addEventListener('click',function(){b.setAttribute('aria-checked',b.getAttribute('aria-checked')==='true'?'false':'true')})});
+
+  /* simulation */
+  var beats=$$('#beats .beat'), sb=$('#simBtn'), sl=$('#simLbl'), timers=[];
+  function setB(n){beats.forEach(function(b,i){b.classList.toggle('on',i<n)})}
+  sb.addEventListener('click',function(){
+    timers.forEach(clearTimeout);timers=[];setB(0);sl.textContent='Playing…';
+    if(rm){setB(3);sl.textContent='Replay';return}
+    timers.push(setTimeout(function(){setB(1)},150));timers.push(setTimeout(function(){setB(2)},1500));timers.push(setTimeout(function(){setB(3)},2900));timers.push(setTimeout(function(){sl.textContent='Replay'},3300));
+  });
+
+  /* market calculator */
+  var S=149e6,CH=.67,NON=.49,PUNE=11.499069e6,P60=.105,PU=.6,SOMU=3000;
+  var rP=$('#rPrice'),rU=$('#rUrban'),rA=$('#rAff');
+  function cr(v){return v>=100?Math.round(v).toLocaleString('en-IN'):v>=10?v.toFixed(1):v.toFixed(2)}
+  function pp(x){return x>=1e6?(x/1e6).toFixed(1)+'M':x>=1e3?(x/1e3).toFixed(1)+'k':Math.round(x)+''}
+  function calc(){
+    var price=+rP.value,u=+rU.value/100,a=+rA.value/100;
+    var tam=S*CH, urb=tam*u, non=urb*NON, sam=non*a, pune=PUNE*P60*PU*CH*NON*a;
+    var tC=tam*price/1e7, sC=sam*price/1e7, oC=SOMU*price/1e7;
+    $('#oPrice').textContent='₹'+price.toLocaleString('en-IN');$('#oUrban').textContent=rU.value+'%';$('#oAff').textContent=rA.value+'%';
+    var T='₹'+cr(tC)+' Cr',Sm='₹'+cr(sC)+' Cr',O='₹'+cr(oC)+' Cr';
+    $('#tTam').textContent=T;$('#cTam').textContent=T;$('#tSam').textContent=Sm;$('#cSam').textContent=Sm;$('#tSom').textContent=O;$('#cSom').textContent=O;
+    $('#wTam').textContent=pp(tam)+' seniors with a chronic illness';
+    $('#wSam').textContent=pp(sam)+' urban seniors who skip medicine and can afford it';
+    $('#wSom').textContent='3,000 devices in Pune, year one · '+(SOMU/pune*100).toFixed(1)+'% of its SAM';
+    $('#bChr').textContent=pp(tam)+' · TAM';$('#bUrb').textContent=pp(urb);$('#bNon').textContent=pp(non);$('#bAff').textContent=pp(sam)+' · SAM';$('#bPune').textContent=pp(pune);$('#bShare').textContent=(SOMU/pune*100).toFixed(1)+'%';
+  }
+  function fillR(r){r.style.setProperty('--pct',((r.value-r.min)/(r.max-r.min)*100)+'%')}
+  [rP,rU,rA].forEach(function(r){r.addEventListener('input',function(){fillR(r);calc()});fillR(r)});
+  $('#rsBtn').addEventListener('click',function(){rP.value=4500;rU.value=35;rA.value=20;[rP,rU,rA].forEach(fillR);calc()});
+  calc();
+})();
+</script>
+
+</body></html>
